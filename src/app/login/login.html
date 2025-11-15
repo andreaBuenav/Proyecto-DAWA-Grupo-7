@@ -1,0 +1,36 @@
+<main class="main d-flex justify-content-center align-items-center vh-100">
+  <div class="login-card text-center p-5 rounded-4 shadow">
+    <h2 class="fw-bold mb-4 text-white">Iniciar Sesion</h2>
+
+    <div class="input-group mb-3 rounded-pill overflow-hidden">
+      <span class="input-group-text bg-white border-0">
+        <mat-icon>person</mat-icon>
+      </span>
+      <input
+        id="user"
+        type="text"
+        class="form-control border-0"
+        placeholder="Username"
+        [(ngModel)]="user"
+      />
+    </div>
+
+    <!-- Campo de contraseña -->
+    <div class="input-group mb-4 rounded-pill overflow-hidden">
+      <input
+        id="pass"
+        type="password"
+        class="form-control border-0"
+        placeholder="Password"
+        [(ngModel)]="password"
+      />
+      <span class="input-group-text bg-white border-0">
+        <mat-icon>lock</mat-icon>
+      </span>
+    </div>
+
+    <button class="btn btn-light w-100 py-2 fw-bold rounded-pill" (click)="onAccept()">
+      Aceptar
+    </button>
+  </div>
+</main>
