@@ -2,7 +2,9 @@
     <header class="header">
         <div class="brand">SCAI-VEH</div>
         <div class="actions">
+            <span class="text-white fw-bold" *ngIf="logueadoCabecera">{{ nombreUsuario }}</span>
             <button >Acerca de</button>
-            <button >Iniciar Sesión</button>
+            <button *ngIf="!logueadoCabecera" (click)="mostrarLogin()">Iniciar Sesión</button>
+            <button *ngIf="logueadoCabecera" (click)="cerrarSesion()">Cerrar Sesion</button>
         </div>
     </header>
