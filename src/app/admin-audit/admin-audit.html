@@ -1,0 +1,134 @@
+<div class="tab-navigation">
+    <button 
+        (click)="cambiarPestana('Auditoría')" 
+        [class.active-tab]="pestanaActiva === 'Auditoría'"
+    >Auditoría</button>
+    <button 
+        (click)="cambiarPestana('Audiollamadas')" 
+        [class.active-tab]="pestanaActiva === 'Audiollamadas'"
+    >Audiollamadas</button>
+    <button 
+        (click)="cambiarPestana('TelegramBots')" 
+        [class.active-tab]="pestanaActiva === 'TelegramBots'"
+    >TelegramBots</button>
+</div>
+
+<div class="content-container">
+    <!-- Controles de Filtro y Exportación -->
+    <div class="control-panel">
+        <div class="filters">
+            
+            <!-- Input de búsqueda por Placa -->
+            <input 
+                type="text" 
+                class="form-control" 
+                placeholder="Buscar por placa..." 
+                [(ngModel)]="busquedaPlaca"
+                (keyup)="aplicarFiltros()"
+            >
+
+            <!-- Filtro Tipo de Usuario -->
+            <mat-form-field appearance="outline" class="filter-select">
+                <mat-label>Tipo de Usuario</mat-label>
+                <mat-select [(ngModel)]="tipoUsuarioFiltro" (selectionChange)="aplicarFiltros()">
+                    <mat-option value="">Todos</mat-option>
+                    <mat-option value="Residente">Residente</mat-option>
+                    <mat-option value="Visitante">Visitante</mat-option>
+                </mat-select>
+            </mat-form-field>
+            
+            <!-- Filtro Tipo de Placa -->
+            <mat-form-field appearance="outline" class="filter-select">
+                <mat-label>Tipo de Placa</mat-label>
+                <mat-select [(ngModel)]="tipoPlacaFiltro" (selectionChange)="aplicarFiltros()">
+                    <mat-option value="">Todos</mat-option>
+                    <mat-option value="Particular">Particular</mat-option>
+                    <mat-option value="Comercial">Comercial</mat-option>
+                </mat-select>
+            </mat-form-field>
+
+            <!-- Botones de Exportación -->
+            <button (click)="exportarPDF()" mat-flat-button color="primary" class="btn-export pdf-btn">
+                <i class="fas fa-file-pdf"></i> Exportar PDF
+            </button>
+            <button (click)="exportarExcel()" mat-flat-button class="btn-export excel-btn">
+                <i class="fas fa-file-excel"></i> Exportar Excel
+            </button>
+        </div>
+    </div>
+
+    <!-- Tabla de Movimientos (MatTable) -->
+    @if (pestanaActiva === 'Auditoría') {
+        <div class="data-table-wrapper mat-elevation-z8">
+            <table mat-table [dataSource]="dataSource" class="audit-table">
+
+                <!-- ID Column -->
+                <ng-container matColumnDef="id">
+                    <th mat-header-cell *matHeaderCellDef>#</th>
+                    <td mat-cell *matCellDef="let row">{{row.id}}</td>
+                </ng-container>
+
+                <!-- Placa Column -->
+                <ng-container matColumnDef="placa">
+                    <th mat-header-cell *matHeaderCellDef>Placa</th>
+                    <td mat-cell *matCellDef="let row">{{row.placa}}</td>
+                </ng-container>
+
+                <!-- Hora Acceso Column -->
+                <ng-container matColumnDef="horaAcceso">
+                    <th mat-header-cell *matHeaderCellDef>Hora Acceso</th>
+                    <td mat-cell *matCellDef="let row">{{row.horaAcceso}}</td>
+                </ng-container>
+                
+                <!-- Hora Salida Column -->
+                <ng-container matColumnDef="horaSalida">
+                    <th mat-header-cell *matHeaderCellDef>Hora Salida</th>
+                    <td mat-cell *matCellDef="let row">{{row.horaSalida}}</td>
+                </ng-container>
+
+                <!-- Tiempo Permanencia Column -->
+                <ng-container matColumnDef="tiempoPermanencia">
+                    <th mat-header-cell *matHeaderCellDef>Permanencia</th>
+                    <td mat-cell *matCellDef="let row">{{row.tiempoPermanencia}}</td>
+                </ng-container>
+
+                <!-- Tipo Usuario Column -->
+                <ng-container matColumnDef="tipoUsuario">
+                    <th mat-header-cell *matHeaderCellDef>Tipo Usuario</th>
+                    <td mat-cell *matCellDef="let row">{{row.tipoUsuario}}</td>
+                </ng-container>
+                
+                <!-- Tipo Placa Column -->
+                <ng-container matColumnDef="tipoPlaca">
+                    <th mat-header-cell *matHeaderCellDef>Tipo Placa</th>
+                    <td mat-cell *matCellDef="let row">{{row.tipoPlaca}}</td>
+                </ng-container>
+
+                <!-- Definición de filas -->
+                <tr mat-header-row *matHeaderRowDef="columnas"></tr>
+                <tr mat-row *matRowDef="let row; columns: columnas;"></tr>
+                
+                <!-- Fila si no hay datos -->
+                <tr class="mat-row" *matNoDataRow>
+                  <td class="mat-cell" [attr.colspan]="columnas.length">
+                      No se encontraron registros de auditoría que coincidan con los filtros.
+                  </td>
+                </tr>
+            </table>
+        </div>
+        
+        <div class="table-footer">
+            Total Registros: {{ dataSource.filteredData.length }}
+            <!-- Uso de control de flujo nativo @if -->
+            @if (dataSource.filteredData.length !== datosTabla.length) {
+                <span> (Filtrados de {{ datosTabla.length }})</span>
+            }
+        </div>
+    } @else {
+        <!-- Placeholder para otras pestañas, usando correctamente pestanaActiva -->
+        <div class="placeholder-content">
+            <h2>Contenido de {{ pestanaActiva }} no disponible.</h2>
+            <p>Aquí se mostraría la información de trazabilidad o logs de {{ pestanaActiva }}.</p>
+        </div>
+    }
+</div>
