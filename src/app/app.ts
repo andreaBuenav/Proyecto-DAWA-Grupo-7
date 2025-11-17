@@ -6,7 +6,7 @@ import { CopyRight } from './copy-right/copy-right';
 
 @Component({
   selector: 'app-root',
-  imports: [Cabecera, Login, CopyRight],
+  imports: [Cabecera, Login, CopyRight, RouterOutlet],
   templateUrl: './app.html',
   styleUrl: './app.css'
 })

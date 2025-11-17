@@ -1,0 +1,35 @@
+<div class="lpr-container">
+    <h2 class="title">Reconocimiento Vehicular (LPR)</h2>
+
+    <div class="panel">
+    <!-- Panel izquierdo: imagen -->
+    <div class="left-panel">
+        <label class="upload-box">
+        <input type="file" accept="image/*" (change)="cargarImagen($event)" />
+        <span *ngIf="!imagenPreview">Subir Imagen</span>
+        <img *ngIf="imagenPreview" [src]="imagenPreview" alt="Imagen" class="preview" />
+        </label>
+    </div>
+
+    <!-- Panel derecho: resultados -->
+    <div class="right-panel">
+        <button class="btn" (click)="procesar()" [disabled]="!imagen">Analizar Imagen</button>
+
+      <div class="results" *ngIf="placa">
+        <p><strong>Placa detectada:</strong> {{ placa }}</p>
+
+        <ng-container *ngIf="infoVehiculo; else noMatch">
+            <p><strong>Dueño:</strong> {{ infoVehiculo.dueno }}</p>
+
+            <div class="access-indicator" [ngClass]="infoVehiculo.acceso ? 'allowed' : 'denied'">
+            {{ infoVehiculo.acceso ? 'ACCESO PERMITIDO' : 'ACCESO DENEGADO' }}
+            </div>
+        </ng-container>
+
+        <ng-template #noMatch>
+            <div class="access-indicator denied">PLACA NO REGISTRADA</div>
+        </ng-template>
+        </div>
+    </div>
+    </div>
+</div>

@@ -1,0 +1,26 @@
+<h3 style="text-align:center;">Editar Guardia</h3>
+
+<div class="form-group">
+  <label>Nombre:</label>
+  <input class="form-control" [(ngModel)]="guardia.nombre">
+</div>
+
+<div class="form-group">
+  <label>Turno:</label>
+  <input class="form-control" [(ngModel)]="guardia.turno">
+</div>
+
+<div class="form-group">
+  <label>Teléfono:</label>
+  <input class="form-control" [(ngModel)]="guardia.telefono">
+</div>
+
+<div class="form-group">
+  <label>Estado:</label>
+  <select class="form-control" [(ngModel)]="guardia.estado">
+    <option>Activo</option>
+    <option>Suspendido</option>
+  </select>
+</div>
+
+<button class="btn btn-success mt-3" (click)="guardar()">Guardar Cambios</button>

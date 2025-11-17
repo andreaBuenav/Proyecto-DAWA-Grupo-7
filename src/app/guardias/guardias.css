@@ -1,0 +1,77 @@
+/* Contenedor general */
+:host {
+  display: block;
+  margin-top: 90px; /* Ajusta según la altura de tu cabecera */
+  padding: 20px;
+}
+
+/* Título */
+h2 {
+  color: #0f2438; /* Azul elegante */
+  font-weight: 600;
+  margin-bottom: 20px;
+}
+
+/* Caja de filtro */
+.filter-box {
+  margin: 0 auto 25px auto;
+  max-width: 400px;
+}
+
+.filter-box input {
+  border-radius: 12px;
+  border: 1px solid #cfd8dc;
+  padding: 10px 14px;
+  transition: 0.3s ease-in-out;
+}
+
+.filter-box input:focus {
+  border-color: #0f2438;
+  box-shadow: 0 0 8px rgba(15, 36, 56, 0.3);
+}
+
+/* Tabla */
+table {
+  width: 100%;
+  background: white;
+  border-radius: 12px;
+  overflow: hidden;
+  border: 1px solid #e0e0e0;
+}
+
+/* Encabezados */
+th.mat-header-cell {
+  background-color: #0f2438 !important; 
+  color: white !important;
+  font-weight: 600;
+  text-align: center;
+  padding: 14px;
+}
+
+/* Celdas */
+td.mat-cell {
+  padding: 12px;
+  text-align: center;
+}
+
+/* Hover */
+tr.mat-row:hover {
+  background-color: #f1f5f9;
+}
+
+/* Botones */
+.btn-primary {
+  background-color: #1565c0;
+  border: none;
+  border-radius: 8px;
+  padding: 6px 12px;
+}
+
+.btn-primary:hover {
+  background-color: #0d47a1;
+}
+
+.btn-danger {
+  border-radius: 8px;
+  padding: 6px 12px;
+}
