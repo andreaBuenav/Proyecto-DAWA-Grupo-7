@@ -1,0 +1,100 @@
+<div class="gestion-container">
+  <h3>
+    {{
+      editandoId !== null
+        ? "Editando Visitante"
+        : "Pre-registrar Visitante Temporal"
+    }}
+  </h3>
+
+  <form
+    [formGroup]="visitanteForm"
+    (ngSubmit)="onSubmit()"
+    class="form-visitante"
+  >
+    <div class="form-group">
+      <label for="nombreCompleto">Nombre Completo:</label>
+      <input id="nombreCompleto" type="text" formControlName="nombreCompleto" />
+    </div>
+
+    <div class="form-group">
+      <label for="identificacion">Número de Identificación:</label>
+      <input id="identificacion" type="text" formControlName="identificacion" />
+    </div>
+
+    <div class="form-group">
+      <label for="placaVehiculo">Placa del Vehículo (Opcional):</label>
+      <input id="placaVehiculo" type="text" formControlName="placaVehiculo" />
+    </div>
+
+    <div class="form-group">
+      <label for="fechaInicio">Validez (Desde):</label>
+      <input
+        id="fechaInicio"
+        type="datetime-local"
+        formControlName="fechaInicio"
+      />
+    </div>
+
+    <div class="form-group">
+      <label for="fechaFin">Validez (Hasta):</label>
+      <input id="fechaFin" type="datetime-local" formControlName="fechaFin" />
+    </div>
+
+    <div class="botones-accion">
+      <button
+        type="submit"
+        class="btn-guardar"
+        [disabled]="visitanteForm.invalid"
+      >
+        {{ editandoId !== null ? "Actualizar Cambios" : "Guardar Visitante" }}
+      </button>
+
+      <button
+        type="button"
+        class="btn-cancelar"
+        *ngIf="editandoId !== null"
+        (click)="cancelarEdicion()"
+      >
+        Cancelar
+      </button>
+    </div>
+  </form>
+
+  <hr />
+
+  <h3>Visitantes Programados</h3>
+
+  <table class="tabla-visitantes">
+    <thead>
+      <tr>
+        <th>Nombre</th>
+        <th>Identificación</th>
+        <th>Placa</th>
+        <th>Válido Desde</th>
+        <th>Válido Hasta</th>
+        <th>Acciones</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let v of visitantes">
+        <td>{{ v.nombreCompleto }}</td>
+        <td>{{ v.identificacion }}</td>
+        <td>{{ v.placaVehiculo || "N/A" }}</td>
+        <td>{{ v.fechaInicio | date : "dd/MM/yy HH:mm" }}</td>
+        <td>{{ v.fechaFin | date : "dd/MM/yy HH:mm" }}</td>
+        <td>
+          <button class="btn-editar" (click)="onEditar(v.id)">Editar</button>
+          <button class="btn-eliminar" (click)="onEliminar(v.id)">
+            Eliminar
+          </button>
+        </td>
+      </tr>
+      <tr *ngIf="visitantes.length === 0">
+        <td colspan="6" style="text-align: center">
+          No hay visitantes programados.
+        </td>
+      </tr>
+    </tbody>
+  </table>
+</div>
