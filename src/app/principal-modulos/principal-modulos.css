@@ -1,0 +1,102 @@
+/* Variables de Estilo */
+:root {
+    --color-principal: #007bff;
+    --color-fondo: #f9f9f9;
+    --color-borde: #ddd;
+    --color-texto-principal: #333;
+    --color-modulo-inactivo: #e0e0e0; 
+}
+
+/* Estilos Generales */
+body {
+    font-family: 'Roboto', sans-serif;
+    background-color: var(--color-fondo); 
+    margin: 0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh;
+}
+
+.contenedor {
+    background-color: #ffffff;
+    padding: 60px 80px;
+    border-radius: 10px;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+    text-align: center;
+}
+
+/* Título de Bienvenida */
+.titulo-bienvenida {
+    font-size: 44px;
+    color: var(--color-texto-principal);
+    margin-bottom: 60px;
+    font-weight: 400;
+    letter-spacing: -0.5px;
+}
+
+/* Contenedor de Módulos (la cuadrícula) */
+.menu-modulos {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 40px;
+}
+
+/* 🚨 Estilo para los Elementos <button> 🚨 */
+.modulo-item {
+    /* Reinicia estilos por defecto del navegador para <button> */
+    appearance: none;
+    -webkit-appearance: none;
+    border: none;
+    outline: none;
+    
+    /* Estilos de diseño */
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    
+    height: 140px;
+    width: 180px;
+    padding: 15px; /* Añadido padding para asegurar espacio */
+    
+    background-color: var(--color-modulo-inactivo);
+    color: var(--color-texto-principal);
+    
+    border: 1px solid var(--color-borde);
+    border-radius: 8px;
+    
+    cursor: pointer; /* Indica que es clickeable */
+    transition: all 0.3s ease;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
+    font-family: inherit; /* Hereda la fuente Roboto */
+}
+
+/* Efecto al pasar el ratón (Hover) */
+.modulo-item:hover {
+    background-color: var(--color-principal); 
+    color: #ffffff;
+    transform: translateY(-5px);
+    box-shadow: 0 15px 25px rgba(0, 0, 0, 0.15);
+}
+
+/* Iconos */
+.modulo-icono {
+    font-size: 36px;
+    margin-bottom: 10px;
+    color: var(--color-principal);
+    transition: color 0.3s ease;
+}
+
+/* Cambiar el color del ícono a blanco en hover */
+.modulo-item:hover .modulo-icono {
+    color: #ffffff;
+}
+
+/* Texto del Módulo */
+.modulo-texto {
+    font-size: 15px;
+    font-weight: 500;
+    padding: 0 5px;
+    line-height: 1.2; /* Ajuste para mejor lectura */
+}
