@@ -23,4 +23,7 @@ export class PrincipalModulos {
   mostrarVisitantes(){
     this.rutasPaginas.navigate(['/visitantes']);
   }
+  mostrarLpr(){
+    this.rutasPaginas.navigate(['/lpr']);
+  }
 }
