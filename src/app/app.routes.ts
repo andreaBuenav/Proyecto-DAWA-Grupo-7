@@ -7,6 +7,7 @@ import { AdminAudit } from './admin-audit/admin-audit';
 import { VisitantesComponent } from './visitantes/visitantes.component';
 import { Gestionresidentes } from './gestionresidentes/gestionresidentes';
 import { PrincipalModulos } from './principal-modulos/principal-modulos';
+import { PanelControl } from './panel-control/panel-control';
 export const routes: Routes = [
     {path:'', component: Inicio},
     {path:'principal', component: PrincipalModulos},
@@ -16,4 +17,5 @@ export const routes: Routes = [
     {path: 'audit', component: AdminAudit},
     {path: 'visitantes', component: VisitantesComponent},
     {path: 'residentes', component: Gestionresidentes},
+    {path: 'panel-control', component: PanelControl}
 ];
