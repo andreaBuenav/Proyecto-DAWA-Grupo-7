@@ -1,0 +1,34 @@
+<div class="contenedor">
+  <h2>Control de Acceso - Panel</h2>
+
+
+  <div class="filtro">
+    <input [(ngModel)]="filtro" type="text" placeholder="Buscar..." >
+  </div>
+
+  <table>
+    <thead>
+      <tr>
+        <th>Nombre</th>
+        <th>Tipo</th>
+        <th>Placa</th>
+        <th>Estado</th>
+        <th>Registrado</th>
+        <th>Hora de Salida</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let reg of registrosFiltrados; let i = index">
+        <td>{{ reg.nombre }}</td>
+        <td>{{ reg.tipo }}</td>
+        <td>{{ reg.placa }}</td>
+        <td>{{ reg.registrado }}</td>
+        <td>
+          <button (click)="ingresarHoraSalida(i)" [disabled]="reg.horaSalida">
+            {{ reg.horaSalida ? reg.horaSalida : 'Ingresar Salida' }}
+          </button>
+        </td>
+      </tr>
+    </tbody>
+  </table>
+</div>

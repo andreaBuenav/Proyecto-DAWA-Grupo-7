@@ -26,4 +26,7 @@ export class PrincipalModulos {
   mostrarLpr(){
     this.rutasPaginas.navigate(['/lpr']);
   }
+  mostrarPanelControl(){
+    this.rutasPaginas.navigate(['/panel-control']);
+  }
 }
