@@ -7,7 +7,7 @@ import { AutorizacionService } from '../autorizacion-service';
   selector: 'app-cabecera',
   imports: [CommonModule],
   templateUrl: './cabecera.html',
-  styleUrl: './cabecera.css',
+  styleUrls: ['./cabecera.css'],
 })
 export class Cabecera {
     logueadoCabecera = false;

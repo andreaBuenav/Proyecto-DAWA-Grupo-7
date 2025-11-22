@@ -1,7 +1,7 @@
 /* Variables de Estilo */
 :root {
     --color-principal: #007bff;
-    --color-fondo: #f9f9f9;
+    --color-fondo: #90909070;
     --color-borde: #ddd;
     --color-texto-principal: #333;
     --color-modulo-inactivo: #e0e0e0; 
@@ -9,8 +9,8 @@
 
 /* Estilos Generales */
 body {
-    font-family: 'Roboto', sans-serif;
-    background-color: var(--color-fondo); 
+  font-family: "Stack Sans Headline", sans-serif;
+    background-color: #CCA10C; 
     margin: 0;
     display: flex;
     justify-content: center;
@@ -19,10 +19,11 @@ body {
 }
 
 .contenedor {
-    background-color: #ffffff;
-    padding: 60px 80px;
-    border-radius: 10px;
-    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+    background-color: #ffff;
+    margin-top: 25px;
+    padding: 20px 80px;
+    border-radius: 15px;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.285);
     text-align: center;
 }
 
@@ -30,6 +31,7 @@ body {
 .titulo-bienvenida {
     font-size: 44px;
     color: var(--color-texto-principal);
+    margin-top: 20px;
     margin-bottom: 60px;
     font-weight: 400;
     letter-spacing: -0.5px;
@@ -75,9 +77,10 @@ body {
 /* Efecto al pasar el ratón (Hover) */
 .modulo-item:hover {
     background-color: var(--color-principal); 
-    color: #ffffff;
+    color: #CCA10C;
+;
     transform: translateY(-5px);
-    box-shadow: 0 15px 25px rgba(0, 0, 0, 0.15);
+    box-shadow: 0 15px 25px rgba(0, 0, 0, 0.147);
 }
 
 /* Iconos */
@@ -88,9 +91,9 @@ body {
     transition: color 0.3s ease;
 }
 
-/* Cambiar el color del ícono a blanco en hover */
 .modulo-item:hover .modulo-icono {
-    color: #ffffff;
+    color:#CCA10C;
+;
 }
 
 /* Texto del Módulo */

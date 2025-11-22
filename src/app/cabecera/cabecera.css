@@ -11,11 +11,11 @@ body {
   justify-content: space-between;
   align-items: center;
   padding: 1rem 2rem;
-  background-color: rgba(15, 36, 56, 0.7);
+  background-color: #252525;
   color: #b0bec5;
   box-shadow: 0 2px 10px rgba(0, 0, 0, 0.25);
   backdrop-filter: blur(6px);
-  border-bottom: 1px solid rgba(0, 188, 212, 0.2);
+  border-bottom: 1px solid #90909070;
   position: fixed;
   top: 0;
   width: 100%;
@@ -24,23 +24,24 @@ body {
 }
 
 .header:hover {
-  background-color: rgba(15, 36, 56, 0.8);
+  background-color: #6b6b6b;
 }
 
 
 .header .brand {
-  font-size: 1.6rem;
+  font-size: 2rem;
   font-weight: 600;
-  color: #00e5ff;
+  color: #ffffff;
   letter-spacing: 1px;
-  text-shadow: 0 0 6px rgba(0, 229, 255, 0.5);
+  text-shadow: 0 0 6px rgba(170, 167, 167, 0.5);
 }
 
 /* Botones translúcidos coherentes */
 .header .actions button {
-  background-color: rgba(0, 188, 212, 0.1);
-  border: 1px solid rgba(0, 188, 212, 0.4);
-  color: #00e5ff;
+  background-color: #cca01c;
+  border: 1px solid #EBBC2F;
+ text-shadow: 0 0 6px #645012;
+  color: #ffffff;
   padding: 0.4rem 1rem;
   margin-left: 0.5rem;
   border-radius: 6px;
@@ -51,10 +52,10 @@ body {
 }
 
 .header .actions button:hover {
-  background-color: #00bcd4;
-  color: #0a0f1f;
-  border-color: #00e5ff;
-  box-shadow: 0 0 12px rgba(0, 188, 212, 0.6);
+  background-color: #252525;
+  color: #ffffff;
+  border-color: #353424;
+  box-shadow: 0 0 12px rgba(189, 189, 189, 0.6);
 }
 
 /* Espaciado general para evitar que el contenido quede debajo del header */

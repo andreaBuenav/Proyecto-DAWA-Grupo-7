@@ -1,0 +1,12 @@
+menu-lateral {
+  width: 240px;
+  position: fixed;
+  top: 0;
+  left: 0;
+  height: 100vh;
+}
+
+.contenido-layout {
+  margin-left: 240px; /* igual al ancho del menú */
+  padding: 20px;
+}
