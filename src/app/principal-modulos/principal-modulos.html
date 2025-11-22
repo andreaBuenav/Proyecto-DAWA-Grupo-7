@@ -5,27 +5,26 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Bienvenido al Sistema</title>
     <link rel="stylesheet" href="principal-modulos.css">
-    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700&display=swap" rel="stylesheet">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Stack+Sans+Headline:wght@200..700&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css" integrity="sha512-Evv84Mr4kqVGRNSgIGL/F/aIDqQb7xQ2vcrdIwxfjThSH8CSR7PBEakCr51Ck+w+/U6swU2Im1vVX0SVk9ABhg==" crossorigin="anonymous" referrerpolicy="no-referrer" /></head>
 <body>
     <div class="contenedor">
-        <h1 class="titulo-bienvenida">Bienvenido al sistema</h1>
-        
+
+        <h1 class="titulo-bienvenida">BIENVENIDO  AL  SISTEMA</h1>
+         
         <div class="menu-modulos">
             <button class="modulo-item" type="button" (click)="mostrarGuardias()">
                 <i class="fas fa-shield-alt modulo-icono"></i>
-                <span class="modulo-texto">Gestión de guardias</span>
+                <span class="modulo-texto">Gestión de Guardias</span>
             </button>
             
             <button class="modulo-item" type="button" (click)="mostrarResidentes()">
                 <i class="fa-solid fa-people-roof modulo-icono"></i>
-                <span class="modulo-texto">Gestión de residentes</span>
+                <span class="modulo-texto">Gestión de Residentes</span>
             </button>
-            
-            <button class="modulo-item" type="button">
-                <i class="fas fa-car modulo-icono"></i>
-                <span class="modulo-texto">Gestión de vehículos</span>
-            </button>
+        
 
             <button class="modulo-item" type="button" (click) = mostrarAudit()>
                 <i class="fas fa-chart-line modulo-icono"></i>
@@ -45,7 +44,7 @@
 
             <button class="modulo-item" type="button" (click) = mostrarPanelControl()>
                 <i class="fa-solid fa-chalkboard-user modulo-icono"></i>
-                <span class="modulo-texto">Panel de control de acceso</span>
+                <span class="modulo-texto">Panel de control de Acceso</span>
             </button>
         </div>
     </div>

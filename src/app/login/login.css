@@ -1,53 +1,54 @@
+
 .main {
-  background: linear-gradient(135deg, #0a0f1f 50%, #0f2438 50%);
+  background: linear-gradient(135deg, #CCA10C 50%, #7e6403 50%);
 }
 
 .login-card {
   background-color: rgba(10, 15, 31, 0.9);
   width: 100%;
   max-width: 400px;
-  border: 1.5px solid #00bcd4; 
-  box-shadow: 0 0 20px rgba(0, 188, 212, 0.3);
+  border: 1.5px solid #90909070; 
+  box-shadow: 0 0 20px rgba(255, 255, 255, 0.693);
   border-radius: 10px;
 }
 
 .input-group {
-  background-color: rgba(255, 255, 255, 0.08);
-  border: 1px solid rgba(0, 188, 212, 0.3);
+  background-color: #ffffff14;
+  border: 1px solid #7e6403
 }
 
 .input-group-text mat-icon {
-  color: #00bcd4; /* cian */
+  color:#000000; 
 }
 
 .form-control {
   background: transparent;
-  color: #e0e0e0;
+  color:#000000 ;
 }
 
 .form-control::placeholder {
-  color: rgba(224, 224, 224, 0.6);
+  color: #eae4e4ba;
 }
 
 .btn {
-  background-color: #00bcd4;
+  background-color: #CCA10C;
   color: #0a0f1f;
   font-weight: bold;
   letter-spacing: 1px;
   transition: all 0.3s ease;
   border: none;
   border-radius: 25px;
-  box-shadow: 0 0 10px rgba(0, 188, 212, 0.4);
+  box-shadow: 0 0 10px rgba(204, 161, 12, 0.4);
 }
 
 .btn:hover {
-  background-color: #0288d1; 
-  color: #fff;
-  box-shadow: 0 0 15px rgba(2, 136, 209, 0.6);
+  background-color: #c6c6c6; 
+  color: #5e5e5e;
+  box-shadow: 0 0 15px rgba(199, 199, 199, 0.6);
 }
 
 h2 {
   font-family: 'Poppins', sans-serif;
   color: #00e5ff; 
-  text-shadow: 0 0 8px rgba(0, 229, 255, 0.4);
+  text-shadow: 0 0 8px #cccccc86;
 }
