@@ -29,9 +29,9 @@ body {
 /* --- Contenido Principal --- */
 .content-area {
     padding: 50px;
-    max-width: 1400px;
+    max-width: 1200px;
     width: 100%;
-    margin: 0 auto;
+    margin: 30px 240px;
 }
 
 /* --- Contenedor de Gestión (Diseño de 2 Columnas) --- */

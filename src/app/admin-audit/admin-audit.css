@@ -7,6 +7,10 @@
     --text-medium: #b0bec5;
 }
 
+.audit-content {
+    margin-left: 240px;    /* Espacio para el menú vertical */
+    padding: 80px 2rem 2rem 2rem;
+}
 .audit-page {
     /* Ajuste para dejar espacio al navbar fijo */
     padding: 80px 2rem 2rem 2rem; 

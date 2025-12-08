@@ -1,7 +1,6 @@
-// src/app/visitantes/visitantes.component.ts
 
 import { Component, OnInit } from '@angular/core';
-// ¡¡AÑADE ESTOS!!
+
 import {
   FormBuilder,
   FormGroup,
@@ -12,6 +11,7 @@ import { CommonModule } from '@angular/common';
 
 import { Visitante } from '../models/visitante.model';
 import { VisitantesService } from '../visitantes.service';
+import { MenuVertical } from '../menu-vertical/menu-vertical';
 
 @Component({
   selector: 'app-visitantes',
@@ -20,7 +20,8 @@ import { VisitantesService } from '../visitantes.service';
   standalone: true, // <-- ¡IMPORTANTE: AÑADE ESTO!
   imports: [
     CommonModule, // <-- ¡IMPORTANTE: AÑADE ESTO!
-    ReactiveFormsModule, // <-- ¡IMPORTANTE: AÑADE ESTO!
+    ReactiveFormsModule,
+    MenuVertical // <-- ¡IMPORTANTE: AÑADE ESTO!
   ],
 })
 export class VisitantesComponent implements OnInit {

@@ -4,6 +4,7 @@ import { MatButtonModule } from '@angular/material/button';
 import { MatTableModule } from '@angular/material/table';
 import { Router } from '@angular/router';
 import { FormsModule } from '@angular/forms';
+import { MenuVertical } from '../menu-vertical/menu-vertical';
 interface Registro {
   nombre: string;
   tipo: 'Residente' | 'Visitante';
@@ -15,7 +16,7 @@ interface Registro {
 
 @Component({
   selector: 'panel-control',
-  imports: [MatTableModule, CommonModule, MatButtonModule, FormsModule],
+  imports: [MatTableModule, CommonModule, MatButtonModule, FormsModule, MenuVertical],
   templateUrl: './panel-control.html',
   styleUrls: ['./panel-control.css'],
 })

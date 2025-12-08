@@ -7,6 +7,7 @@ import { MatSelectModule } from '@angular/material/select';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { FormsModule } from '@angular/forms'; // Necesario para ngModel
 import { delay, of } from 'rxjs'; 
+import { MenuVertical } from '../menu-vertical/menu-vertical';
 
 // Interfaz para la estructura de datos
 interface Movimiento {
@@ -42,6 +43,7 @@ export class AuditoriaServiceSimulado {
     MatButtonModule, 
     MatSelectModule, 
     MatFormFieldModule,
+    MenuVertical,
     FormsModule
   ],
   templateUrl: './admin-audit.html',

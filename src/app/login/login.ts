@@ -18,7 +18,7 @@ export class Login {
   constructor(private rutasPaginas:Router, private autoriza:AutorizacionService) {}
 
   onAccept() {
-    const userCorrecto = this.autoriza.usuarioSistema.user;
+  const userCorrecto = this.autoriza.usuarioSistema.user;
   const passCorrecto = this.autoriza.usuarioSistema.password;
 
   if (this.user === userCorrecto && this.password === passCorrecto) {

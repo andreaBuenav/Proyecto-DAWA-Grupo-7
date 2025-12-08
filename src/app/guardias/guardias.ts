@@ -6,11 +6,12 @@ import {MatTableModule} from '@angular/material/table';
 import { MatButtonModule } from '@angular/material/button';
 import { CommonModule } from '@angular/common';
 import { ConsultaGuardia } from '../consulta-guardia/consulta-guardia';
+import { MenuVertical } from '../menu-vertical/menu-vertical';
 
 
 @Component({
   selector: 'app-guardias',
-  imports: [MatTableModule, CommonModule, MatButtonModule],
+  imports: [MatTableModule, CommonModule, MatButtonModule, MenuVertical],
   templateUrl: './guardias.html',
   styleUrls: ['./guardias.css'],
 })

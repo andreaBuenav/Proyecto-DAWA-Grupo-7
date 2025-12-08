@@ -1,10 +1,11 @@
 import { Component } from '@angular/core';
 import { createWorker } from 'tesseract.js';
 import { CommonModule } from '@angular/common';
+import { MenuVertical } from '../menu-vertical/menu-vertical';
 
 @Component({
   selector: 'app-lpr',
-  imports: [CommonModule],
+  imports: [CommonModule, MenuVertical],
   templateUrl: './lpr.html',
   styleUrl: './lpr.css',
 })

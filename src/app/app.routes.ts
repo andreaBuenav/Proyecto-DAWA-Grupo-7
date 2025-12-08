@@ -8,6 +8,7 @@ import { VisitantesComponent } from './visitantes/visitantes.component';
 import { Gestionresidentes } from './gestionresidentes/gestionresidentes';
 import { PrincipalModulos } from './principal-modulos/principal-modulos';
 import { PanelControl } from './panel-control/panel-control';
+import { MenuVertical } from './menu-vertical/menu-vertical';
 export const routes: Routes = [
     {path:'', component: Inicio},
     {path:'principal', component: PrincipalModulos},
