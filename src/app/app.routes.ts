@@ -10,13 +10,29 @@ import { PrincipalModulos } from './principal-modulos/principal-modulos';
 import { PanelControl } from './panel-control/panel-control';
 import { MenuVertical } from './menu-vertical/menu-vertical';
 export const routes: Routes = [
-    {path:'', component: Inicio},
-    {path:'principal', component: PrincipalModulos},
-    {path: 'login', component: Login},
-    {path: 'guardias', component: GuardiasComponent},
-    {path: 'lpr', component: Lpr},
-    {path: 'audit', component: AdminAudit},
-    {path: 'visitantes', component: VisitantesComponent},
-    {path: 'residentes', component: Gestionresidentes},
-    {path: 'panel-control', component: PanelControl}
+  {
+    path: '',
+    component: LayoutSimple,  // tu layout sin menú
+    children: [
+      { path: '', component: Inicio },
+      { path: 'login', component: Login },
+      { path: 'principal', component: PrincipalModulos }
+    ]
+  },
+
+  // Layout con menú lateral
+  {
+    path:'app',
+    component: LayoutMenu,
+    children: [
+        { path: 'guardias', component: GuardiasComponent },
+        { path: 'residentes', component: Gestionresidentes },
+        { path: 'audit', component: AdminAudit },
+        { path: 'visitantes', component: VisitantesComponent },
+        { path: 'lpr', component: Lpr },
+        { path: 'panel-control', component: PanelControl }
+    ]
+  },
+
+  { path: '**', redirectTo: '' }
 ];

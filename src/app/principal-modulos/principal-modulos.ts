@@ -10,23 +10,23 @@ export class PrincipalModulos {
    constructor(private rutasPaginas:Router){}
 
  mostrarGuardias(){
-    this.rutasPaginas.navigate(['/guardias']);
+    this.rutasPaginas.navigate(['/app/guardias']);
   }
 
  mostrarResidentes(){
-    this.rutasPaginas.navigate(['/residentes']);
+    this.rutasPaginas.navigate(['/app/residentes']);
   }
 
   mostrarAudit(){
-    this.rutasPaginas.navigate(['/audit']);
+    this.rutasPaginas.navigate(['/app/audit']);
   }
-  mostrarVisitantes(){
-    this.rutasPaginas.navigate(['/visitantes']);
+  mostrarVisitantes(){  
+    this.rutasPaginas.navigate(['/app/visitantes']);
   }
   mostrarLpr(){
-    this.rutasPaginas.navigate(['/lpr']);
+    this.rutasPaginas.navigate(['/app/lpr']);
   }
   mostrarPanelControl(){
-    this.rutasPaginas.navigate(['/panel-control']);
+    this.rutasPaginas.navigate(['/app/panel-control']);
   }
 }
