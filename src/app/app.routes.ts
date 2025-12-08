@@ -9,6 +9,8 @@ import { Gestionresidentes } from './gestionresidentes/gestionresidentes';
 import { PrincipalModulos } from './principal-modulos/principal-modulos';
 import { PanelControl } from './panel-control/panel-control';
 import { MenuVertical } from './menu-vertical/menu-vertical';
+import { LayoutMenu } from './layout-menu/layout-menu';
+import { LayoutSimple } from './layout-simple/layout-simple';
 export const routes: Routes = [
   {
     path: '',
