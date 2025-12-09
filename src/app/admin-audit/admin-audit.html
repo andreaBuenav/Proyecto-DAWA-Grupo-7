@@ -1,18 +1,3 @@
-<div class="tab-navigation">
-    <button 
-        (click)="cambiarPestana('Auditoría')" 
-        [class.active-tab]="pestanaActiva === 'Auditoría'"
-    >Auditoría</button>
-    <button 
-        (click)="cambiarPestana('Audiollamadas')" 
-        [class.active-tab]="pestanaActiva === 'Audiollamadas'"
-    >Audiollamadas</button>
-    <button 
-        (click)="cambiarPestana('TelegramBots')" 
-        [class.active-tab]="pestanaActiva === 'TelegramBots'"
-    >TelegramBots</button>
-</div>
-
 <div class="content-container">
     <!-- Controles de Filtro y Exportación -->
     <div class="control-panel">

@@ -1,13 +1,6 @@
-// src/app/visitantes/visitantes.component.ts
 
 import { Component, OnInit } from '@angular/core';
-// ¡¡AÑADE ESTOS!!
-import {
-  FormBuilder,
-  FormGroup,
-  Validators,
-  ReactiveFormsModule,
-} from '@angular/forms';
+import { FormBuilder, FormGroup, Validators, ReactiveFormsModule, } from '@angular/forms';
 import { CommonModule } from '@angular/common';
 
 import { Visitante } from '../models/visitante.model';
@@ -17,11 +10,8 @@ import { VisitantesService } from '../visitantes.service';
   selector: 'app-visitantes',
   templateUrl: './visitantes.component.html',
   styleUrls: ['./visitantes.component.css'],
-  standalone: true, // <-- ¡IMPORTANTE: AÑADE ESTO!
-  imports: [
-    CommonModule, // <-- ¡IMPORTANTE: AÑADE ESTO!
-    ReactiveFormsModule, // <-- ¡IMPORTANTE: AÑADE ESTO!
-  ],
+  standalone: true,
+  imports: [CommonModule, ReactiveFormsModule,],
 })
 export class VisitantesComponent implements OnInit {
   visitanteForm: FormGroup;
@@ -32,7 +22,7 @@ export class VisitantesComponent implements OnInit {
     private fb: FormBuilder,
     private visitantesService: VisitantesService
   ) {
-    // El resto de tu código aquí no cambia...
+
     this.visitanteForm = this.fb.group({
       nombreCompleto: ['', Validators.required],
       identificacion: ['', Validators.required],

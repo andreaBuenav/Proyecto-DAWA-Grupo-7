@@ -23,31 +23,6 @@
     margin-bottom: 20px;
 }
 
-.tab-navigation {
-    display: flex;
-    margin-bottom: 20px;
-    border-bottom: 2px solid var(--secondary-bg);
-}
-
-.tab-navigation button {
-    background-color: transparent;
-    border: none;
-    color: var(--text-medium);
-    padding: 10px 20px;
-    margin-right: 5px;
-    cursor: pointer;
-    font-size: 1.1rem;
-    font-weight: 500;
-    border-bottom: 3px solid transparent;
-    transition: color 0.3s, border-bottom-color 0.3s;
-}
-
-.tab-navigation button.active-tab {
-    color: var(--accent-cyan);
-    border-bottom-color: var(--accent-cyan);
-    font-weight: 600;
-}
-
 /* --- Panel de Control (Filtros y Exportación) --- */
 .control-panel {
     display: flex;
@@ -58,6 +33,7 @@
     border-radius: 8px;
     margin-bottom: 20px;
     box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
+    margin-top: 60px;
 }
 
 .filters {
