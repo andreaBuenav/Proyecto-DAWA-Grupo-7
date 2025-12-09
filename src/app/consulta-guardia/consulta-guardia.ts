@@ -24,12 +24,18 @@ export class ConsultaGuardia {
 
   guardar() {
     let tabla = this.guardiasSrv.tablaGuardias$.value;
-
     const index = tabla.findIndex((g: any) => g.id === this.guardia.id);
-    tabla[index] = this.guardia;
 
-    this.guardiasSrv.tablaGuardias$.next(tabla);
+    if (index >= 0) {
+      // EDITAR
+      tabla[index] = this.guardia;
+    } else {
+      // NUEVO
+      tabla.push(this.guardia);
+    }
 
+    this.guardiasSrv.tablaGuardias$.next([...tabla]);
+    this.guardiasSrv.guardarEnLocalStorage();
     this.dialogRef.close();
   }
 }

@@ -18,6 +18,17 @@ h2 {
   max-width: 400px;
 }
 
+.top-bar {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 15px;
+}
+
+.buscador {
+  width: 300px;
+}
+
 .filter-box input {
   border-radius: 12px;
   border: 1px solid #cfd8dc;

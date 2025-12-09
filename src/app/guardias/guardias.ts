@@ -6,17 +6,18 @@ import {MatTableModule} from '@angular/material/table';
 import { MatButtonModule } from '@angular/material/button';
 import { CommonModule } from '@angular/common';
 import { ConsultaGuardia } from '../consulta-guardia/consulta-guardia';
+import { MatIconModule } from '@angular/material/icon';
 
 
 @Component({
   selector: 'app-guardias',
-  imports: [MatTableModule, CommonModule, MatButtonModule],
+  imports: [MatTableModule, CommonModule, MatButtonModule, MatIconModule],
   templateUrl: './guardias.html',
   styleUrls: ['./guardias.css'],
 })
 export class GuardiasComponent implements OnInit {
 
-  columnas: string[] = ['id', 'nombre', 'turno', 'telefono', 'estado', 'action'];
+  columnas: string[] = ['id', 'nombre', 'cedula', 'telefono', 'usuario', 'contrasena','action'];
   dataSource: any = [];
   datosTabla: any = [];
 
@@ -39,7 +40,7 @@ export class GuardiasComponent implements OnInit {
 
   editar(row: any) {
     this.guardiasSrv.guardiaSeleccionado$.next(row);
-    this.dialog.open(ConsultaGuardia, { width: '450px', height: '500px' });
+    this.dialog.open(ConsultaGuardia, { width: '450px', height: '700px' });
   }
 
   eliminar(row: any) {
@@ -47,4 +48,30 @@ export class GuardiasComponent implements OnInit {
     this.datosTabla.splice(index, 1);
     this.guardiasSrv.tablaGuardias$.next(this.datosTabla);
   }
+
+  nuevoGuardia() {
+  const nuevo = {
+    id: this.generarId(),
+    nombre: '',
+    cedula: '',
+    telefono: '',
+    usuario: '',
+    contrasena: '',
+    estado: 'Activo'
+  };
+
+  this.guardiasSrv.guardiaSeleccionado$.next(nuevo);
+
+  this.dialog.open(ConsultaGuardia, {
+    width: '450px',
+    height: '700px'
+  });
+}
+
+generarId() {
+  const tabla = this.guardiasSrv.tablaGuardias$.value;
+  if (tabla.length === 0) return 1;
+  return Math.max(...tabla.map((g: any) => g.id)) + 1;
+}
+
 }

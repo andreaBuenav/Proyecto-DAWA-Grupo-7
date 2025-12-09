@@ -1,4 +1,3 @@
-// src/app/visitantes.service.ts
 import { Injectable } from '@angular/core';
 import { Visitante } from './models/visitante.model'; // <-- (Ruta al modelo)
 
@@ -10,7 +9,7 @@ export class VisitantesService {
   private visitantes: Visitante[] = [
     {
       id: 1,
-      nombreCompleto: 'Juan Perez (Ejemplo)',
+      nombreCompleto: 'Juan Perez',
       identificacion: '123456789',
       placaVehiculo: 'ABC-123',
       fechaInicio: new Date('2025-11-20T08:00:00'),
@@ -20,7 +19,7 @@ export class VisitantesService {
 
   private nextId = 2; // Para generar IDs únicos
 
-  constructor() {}
+  constructor() { }
 
   // CREATE (Crear)
   addVisitante(visitante: Omit<Visitante, 'id'>) {
