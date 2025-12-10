@@ -1,16 +1,14 @@
-// src/app/visitantes.service.ts
 import { Injectable } from '@angular/core';
-import { Visitante } from './models/visitante.model'; // <-- (Ruta al modelo)
+import { Visitante } from './models/visitante.model'; 
 
 @Injectable({
   providedIn: 'root',
 })
 export class VisitantesService {
-  // Usamos un array como base de datos de ejemplo
   private visitantes: Visitante[] = [
     {
       id: 1,
-      nombreCompleto: 'Juan Perez (Ejemplo)',
+      nombreCompleto: 'Juan Perez',
       identificacion: '123456789',
       placaVehiculo: 'ABC-123',
       fechaInicio: new Date('2025-11-20T08:00:00'),
@@ -18,11 +16,10 @@ export class VisitantesService {
     },
   ];
 
-  private nextId = 2; // Para generar IDs únicos
+  private nextId = 2;
 
   constructor() {}
 
-  // CREATE (Crear)
   addVisitante(visitante: Omit<Visitante, 'id'>) {
     const nuevoVisitante: Visitante = {
       ...visitante,
@@ -31,7 +28,7 @@ export class VisitantesService {
     this.visitantes.push(nuevoVisitante);
   }
 
-  // READ (Leer)
+
   getVisitantes(): Visitante[] {
     return this.visitantes;
   }
@@ -40,7 +37,7 @@ export class VisitantesService {
     return this.visitantes.find((v) => v.id === id);
   }
 
-  // UPDATE (Actualizar)
+
   updateVisitante(visitanteActualizado: Visitante) {
     const index = this.visitantes.findIndex(
       (v) => v.id === visitanteActualizado.id
@@ -50,7 +47,6 @@ export class VisitantesService {
     }
   }
 
-  // DELETE (Borrar)
   deleteVisitante(id: number) {
     const index = this.visitantes.findIndex((v) => v.id === id);
     if (index !== -1) {

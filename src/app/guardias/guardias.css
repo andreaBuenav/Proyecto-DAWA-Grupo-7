@@ -18,11 +18,15 @@ h2 {
   max-width: 400px;
 }
 
-.filter-box input {
-  border-radius: 12px;
-  border: 1px solid #cfd8dc;
-  padding: 10px 14px;
-  transition: 0.3s ease-in-out;
+.top-bar {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 15px;
+}
+
+.buscador {
+  width: 300px;
 }
 
 .filter-box input:focus {

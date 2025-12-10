@@ -6,8 +6,8 @@
 </div>
 
 <div class="form-group">
-  <label>Turno:</label>
-  <input class="form-control" [(ngModel)]="guardia.turno">
+  <label>Cedula:</label>
+  <input class="form-control" [(ngModel)]="guardia.cedula">
 </div>
 
 <div class="form-group">
@@ -16,11 +16,15 @@
 </div>
 
 <div class="form-group">
-  <label>Estado:</label>
-  <select class="form-control" [(ngModel)]="guardia.estado">
-    <option>Activo</option>
-    <option>Suspendido</option>
-  </select>
+  <label>Usuario:</label>
+  <input class="form-control" [(ngModel)]="guardia.usuario">
 </div>
 
-<button class="btn btn-success mt-3" (click)="guardar()">Guardar Cambios</button>
+<div class="form-group">
+  <label>Contraseña:</label>
+  <input class="form-control" [(ngModel)]="guardia.contrasena">
+</div>
+
+<div class="form-group">
+  <label>Estado:</label>
+  <select class="form-control" [(ngModel)]="guardia.estado">
