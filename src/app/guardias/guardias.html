@@ -32,10 +32,16 @@
     <td mat-cell *matCellDef="let row">{{row.telefono}}</td>
   </ng-container>
 
-  <!-- Estado -->
+  <!-- Usuario -->
   <ng-container matColumnDef="usuario">
     <th mat-header-cell *matHeaderCellDef>Usuario</th>
     <td mat-cell *matCellDef="let row">{{row.usuario}}</td>
+  </ng-container>
+
+  <!-- Estado -->
+  <ng-container matColumnDef="estado">
+    <th mat-header-cell *matHeaderCellDef>Estado</th>
+    <td mat-cell *matCellDef="let row">{{row.estado}}</td>
   </ng-container>
 
   <!-- Contraseña -->

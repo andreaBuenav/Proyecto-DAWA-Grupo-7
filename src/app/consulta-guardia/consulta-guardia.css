@@ -1,35 +1,43 @@
 /* Contenedor general del diálogo */
 :host {
   display: block;
-  padding: 20px;
+  padding: 10px;
   background: #ffffff;
+  max-width: 320px;
+  box-sizing: border-box;
 }
 
 /* Título */
 h3 {
   color: #0f2438;
-  font-weight: 400;
-  margin-bottom: 20px;
+  font-weight: 300;
+  font-size: 18px;
+  margin-bottom: 10px;
+  text-align: center;
 }
 
 /* Grupo de formulario */
 .form-group {
-margin-bottom: 7px;
+  margin-bottom: 8px;
 }
 
 .form-group label {
   font-weight: 600;
-  margin-bottom: 5px;
+  margin-bottom: 6px;
   display: block;
   color: #0f2438;
+  font-size: 13px;
 }
 
 /* Inputs */
 .form-control {
-  border-radius: 10px;
-  padding: 10px 12px;
+  border-radius: 8px;
+  padding: 6px 8px;
   border: 1px solid #cfd8dc;
-  transition: 0.3s ease;
+  transition: 0.18s ease;
+  font-size: 13px;
+  height: 34px;
+  box-sizing: border-box;
 }
 
 .form-control:focus {
@@ -40,13 +48,20 @@ margin-bottom: 7px;
 /* Botón guardar */
 button.btn-success {
   width: 100%;
-  border-radius: 10px;
-  padding: 10px;
+  border-radius: 6px;
+  padding: 7px;
   font-weight: 600;
   background-color: #2e7d32;
   border: none;
+  font-size: 13px;
 }
 
 button.btn-success:hover {
   background-color: #1b5e20;
+}
+
+/* Ajustes para inputs tipo select/textarea si existen */
+select.form-control, textarea.form-control {
+  padding: 8px 10px;
+  height: auto;
 }
