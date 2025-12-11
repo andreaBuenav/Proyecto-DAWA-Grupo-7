@@ -4,16 +4,18 @@ import { BehaviorSubject } from 'rxjs';
 export interface Guardia {
   id: number;
   nombre: string;
-  turno: string;
+  cedula: string;
   telefono: string;
-  estado: string;
+  usuario: string;
+  estado?: string;
+  contrasena: string;
 }
 
 const GUARDIAS_DATA: Guardia[] = [
-  { id: 1, nombre: 'Carlos Jara', turno: 'Mañana', telefono: '099123456', estado: 'Activo' },
-  { id: 2, nombre: 'Luis Paredes', turno: 'Tarde', telefono: '098765432', estado: 'Activo' },
-  { id: 3, nombre: 'Jose Torres', turno: 'Noche', telefono: '097654321', estado: 'Suspendido' },
-  { id: 4, nombre: 'Eduardo Medina', turno: 'Mañana', telefono: '096112233', estado: 'Activo' },
+  { id: 1, nombre: 'Carlos Jara', cedula: '08768765465', telefono: '099123456', usuario: 'cjara', estado: 'Activo', contrasena: '123' },
+  { id: 2, nombre: 'Luis Paredes', cedula: '09283746352', telefono: '098765432', usuario: 'lparedes', estado: 'Activo', contrasena: '123' },
+  { id: 3, nombre: 'Jose Torres', cedula: '09738472647', telefono: '097654321', usuario: 'jtorres', estado: 'Suspendido', contrasena: '123' },
+  { id: 4, nombre: 'Eduardo Medina', cedula: '09383746352', telefono: '096112233', usuario: 'emedina', estado: 'Activo', contrasena: '123' },
 ];
 
 @Injectable({
@@ -23,6 +25,16 @@ export class GuardiasService {
 
   guardiaSeleccionado$ = new BehaviorSubject<any>({});
   tablaGuardias$ = new BehaviorSubject<any>(GUARDIAS_DATA);
+  public guardarEnLocalStorage() {
+    localStorage.setItem('guardias', JSON.stringify(this.tablaGuardias$.value));
+  }
 
-  constructor() {}
+  constructor() {
+    const data = localStorage.getItem('guardias');
+    if (data) {
+      this.tablaGuardias$.next(JSON.parse(data));
+    } else {
+      this.tablaGuardias$.next(GUARDIAS_DATA);
+    }
+  }
 }
