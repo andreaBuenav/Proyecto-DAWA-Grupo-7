@@ -1,35 +1,28 @@
-/* src/app/visitantes/visitantes.component.css */
-
-/*
-* NOTA: El fondo degradado (.main) no debe ir aquí.
-* Ese fondo debe ir en tu archivo global 'src/styles.css'
-* en la etiqueta 'body' para que aplique a toda la app.
-*/
-
+/* ===== CONTENEDOR GENERAL ===== */
 .gestion-container {
-  font-family: "Roboto", sans-serif; /* (Asegúrate de importar Roboto en styles.css) */
+  font-family: "Roboto", sans-serif;
   max-width: 900px;
-  margin: 90px auto 20px auto; /* Mantenemos el margen superior para la cabecera */
+  margin: 90px auto 20px auto; 
   padding: 20px;
-
-  /* --- ESTILOS ADAPTADOS DEL .login-card --- */
-  background-color: rgba(10, 15, 31, 0.9);
-  color: #e0e0e0; /* Color de texto principal */
-  border: 1.5px solid #00bcd4;
-  box-shadow: 0 0 20px rgba(0, 188, 212, 0.3);
-  border-radius: 10px;
+  background: #ffffff; 
+  color: #0f2438;
+  border: 1px solid #cfd8dc;
+  border-radius: 12px;
+  box-shadow: 0 0 12px rgba(15, 36, 56, 0.15);
 }
 
+/* ===== TÍTULO ===== */
 h3 {
-  /* --- ESTILOS ADAPTADOS DEL h2 --- */
   font-family: "Poppins", sans-serif;
-  color: #00e5ff;
-  text-shadow: 0 0 8px rgba(0, 229, 255, 0.4);
-  border-bottom: 1px solid #00bcd4; /* Ya coincidía */
-  padding-bottom: 5px;
-  margin-bottom: 1.5rem;
+  color: #0f2438;
+  font-weight: 600;
+  margin-bottom: 20px;
+  padding-bottom: 6px;
+  border-bottom: 2px solid #1565c0;
+  margin-top: 20px;
 }
 
+/* ===== FORMULARIO ===== */
 .form-visitante {
   display: flex;
   flex-wrap: wrap;
@@ -45,52 +38,59 @@ h3 {
 .form-group label {
   margin-bottom: 5px;
   font-size: 0.9em;
-  color: #00e5ff; /* Color cian para etiquetas */
+  font-weight: 600;
+  color: #0f2438;
 }
 
 .form-group input {
-  padding: 10px;
+  padding: 10px 14px;
+  background: #ffffff;
+  color: #0f2438;
 
-  /* --- ESTILOS ADAPTADOS DEL .form-control y .input-group --- */
-  background: rgba(255, 255, 255, 0.08); /* Fondo de input */
-  color: #e0e0e0;
-  border: 1px solid rgba(0, 188, 212, 0.3);
-  border-radius: 5px;
+  border: 1px solid #cfd8dc;
+  border-radius: 10px;
+  transition: 0.3s ease;
 }
 
-/* Placeholder (tomado del nuevo CSS) */
+.form-group input:focus {
+  border-color: #0f2438;
+  box-shadow: 0 0 8px rgba(15, 36, 56, 0.3);
+}
+
 .form-group input::placeholder {
-  color: rgba(224, 224, 224, 0.6);
+  color: #90a4ae;
 }
 
+/* ===== BOTONES ===== */
 .botones-accion {
   flex-basis: 100%;
   text-align: right;
   margin-top: 10px;
 }
 
-/* --- ESTILOS DE BOTONES (ADAPTADOS DEL .btn) --- */
 button {
   padding: 10px 20px;
-  font-weight: bold;
-  letter-spacing: 1px;
-  transition: all 0.3s ease;
+  font-weight: 600;
   border: none;
-  margin-left: 10px;
-  border-radius: 25px;
-  box-shadow: 0 0 10px rgba(0, 188, 212, 0.4);
+  border-radius: 10px;
+  transition: 0.3s ease;
   cursor: pointer;
 }
 
 .btn-guardar {
-  background-color: #00bcd4;
-  color: #0a0f1f;
+  background-color: #1565c0;
+  color: white;
+  padding-bottom: 20px;
+}
+
+.btn-guardar:hover {
+  background-color: #0d47a1;
 }
 
 .btn-guardar:disabled {
-  background-color: #555;
-  box-shadow: none;
+  background-color: #9e9e9e;
   cursor: not-allowed;
+  box-shadow: none;
 }
 
 .btn-cancelar {
@@ -98,48 +98,52 @@ button {
   color: white;
 }
 
-/* Hover (adaptado de .btn:hover) */
-.btn-guardar:not(:disabled):hover,
 .btn-cancelar:hover {
-  background-color: #0288d1;
-  color: #fff;
-  box-shadow: 0 0 15px rgba(2, 136, 209, 0.6);
+  background-color: #5a6268;
 }
 
-/* --- ESTILOS DE LA TABLA (Mantenidos y adaptados) --- */
+/* ===== TABLA ===== */
 .tabla-visitantes {
   width: 100%;
-  border-collapse: separate; /* O 'collapse' si prefieres */
-  border-spacing: 0;
+  background: white;
+  border-radius: 12px;
+  overflow: hidden;
+  border: 1px solid #e0e0e0;
   margin-top: 25px;
-  border-radius: 10px; /* Redondear la tabla */
-  overflow: hidden; /* Necesario para el border-radius */
 }
 
 .tabla-visitantes th,
 .tabla-visitantes td {
-  padding: 12px 15px;
-  border-bottom: 1px solid rgba(0, 188, 212, 0.3);
-  text-align: left;
+  padding: 14px;
+  text-align: center;
+  border-bottom: 1px solid #e0e0e0;
 }
 
+/* Encabezado */
 .tabla-visitantes th {
-  background-color: rgba(10, 15, 31, 0.9); /* Como el card */
-  color: #00e5ff; /* Como el título */
-  font-family: "Poppins", sans-serif;
+  background-color: #0f2438;
+  color: white;
+  font-weight: 600;
 }
 
-/* Quitar el borde inferior de la última fila */
+/* Última fila sin borde */
 .tabla-visitantes tr:last-child td {
   border-bottom: none;
 }
 
-/* Botones de la tabla (más pequeños) */
+/* Hover */
+.tabla-visitantes tr:hover {
+  background-color: #f1f5f9;
+}
+
+/* ===== BOTONES DE TABLA ===== */
 .btn-editar,
 .btn-eliminar {
   font-size: 0.8em;
-  padding: 5px 10px;
-  border-radius: 20px;
+  padding: 6px 12px;
+  border-radius: 8px;
+  border: none;
+  transition: 0.3s ease;
 }
 
 .btn-editar {
@@ -154,6 +158,5 @@ button {
 
 .btn-editar:hover,
 .btn-eliminar:hover {
-  opacity: 0.8;
-  box-shadow: 0 0 10px rgba(255, 255, 255, 0.2);
+  opacity: 0.85;
 }

@@ -1,309 +1,60 @@
-/* Variables de Color (Basadas en el diseño original) */
-:root {
-    --color-white: #FFFFFF;
-    --color-dark-blue: #0A192F; /* Fondo principal muy oscuro */
-    --color-medium-blue: #12243C; /* Fondo de paneles oscuros */
-    --color-highlight: #00BFFF; /* Azul brillante para botones y acentos */
-    --color-text-light: #E0FFFF; /* Texto principal claro */
-    --color-text-muted: #8899AA; /* Texto secundario, etiquetas */
-    --color-border: #E0E0E0; /* Borde sutil claro para la zona blanca */
-    --color-panel-light: #FFFFFF; /* Fondo del panel derecho (datos del residente) */
-    --color-panel-dark-sidebar: #013A6B; /* Azul oscuro para la barra lateral (mejor contraste) */
-    --color-red: #DC3545; 
+h2 {
+  font-weight: 600;
+  color: #0a253e;
 }
 
-/* Estilos Globales */
-* {
-    box-sizing: border-box;
-    margin: 0;
-    padding: 0;
-    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+.top-bar {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin: 15px 0;
 }
 
-body {
-    background-color: var(--color-dark-blue);
-    color: var(--color-dark-blue); /* Se cambia el color por el fondo blanco del form */
-    min-height: 100vh;
+.buscador {
+  width: 260px;
+  padding: 8px 12px;
+  border-radius: 6px;
+  border: 1px solid #b8c4ce;
 }
 
-/* --- Contenido Principal --- */
-.content-area {
-    padding: 50px;
-    max-width: 1400px;
-    width: 100%;
-    margin: 0 auto;
+table.mat-elevation-z8 {
+  width: 100%;
+  background: white;
+  border-radius: 8px;
+  overflow: hidden;
 }
 
-/* --- Contenedor de Gestión (Diseño de 2 Columnas) --- */
-.management-container {
-    display: flex;
-    background-color: var(--color-panel-light); /* Fondo blanco para el formulario */
-    border-radius: 8px;
-    overflow: hidden;
-    min-height: 700px;
-    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3);
+th.mat-header-cell {
+  font-weight: 600;
+  background: #e1eef9;
+  color: #0a253e;
 }
 
-/* Columna Izquierda: Lista de Residentes */
-.resident-list-panel {
-    width: 300px;
-    padding: 20px 0;
-    /* CAMBIO: Color de fondo oscuro con visibilidad */
-    background-color: var(--color-panel-dark-sidebar); 
+td.mat-cell {
+  color: #1b1b1b;
 }
 
-.btn-add-resident {
-    width: 90%;
-    margin: 0 5%;
-    background-color: transparent;;
-    color: black;
-    margin-bottom: 20px;
-    font-size: 1rem;
-    padding: 10px;
-    border: none;
-    border-radius: 4px;
-    cursor: pointer;
-    font-weight: 600;
-}
-.btn-add-resident:hover {
-    background-color: #00FFFF; /* ¡Azul Eléctrico al pasar el mouse! */
-    color: #ffffff; /* Opcional: Cambia el color del texto si el azul es muy brillante */
+button[mat-icon-button] mat-icon {
+  font-size: 22px;
 }
 
-.btn-consulta-resi {
-    width: 90%;
-    margin: 0 5%;
-    background-color: transparent;
-    color: black;
-    margin-bottom: 20px;
-    font-size: 1rem;
-    padding: 10px;
-    border: none;
-    border-radius: 4px;
-    cursor: pointer;
-    font-weight: 600;
-}
-.btn-consulta-resi:hover {
-    background-color: #545656; /* ¡Azul Eléctrico al pasar el mouse! */
-    color: #ffffff; /* Opcional: Cambia el color del texto si el azul es muy brillante */
-}
-.btn-delete-resi {
-    width: 90%;
-    margin: 0 5%;
-    background-color: transparent;
-    color: black;
-    margin-bottom: 20px;
-    font-size: 1rem;
-    padding: 10px;
-    border: none;
-    border-radius: 4px;
-    cursor: pointer;
-    font-weight: 600;
-}
-.btn-delete-resi:hover {
-    background-color: #ef0000; /* ¡Azul Eléctrico al pasar el mouse! */
-    color: #fff9f9; /* Opcional: Cambia el color del texto si el azul es muy brillante */
-}
-.resident-list {
-    list-style: none;
-    padding: 0;
+button[mat-icon-button][color="primary"] mat-icon {
+  color: #1976d2;
 }
 
-.resident-item {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    padding: 12px 20px;
-    cursor: pointer;
-    font-size: 0.95rem;
-    transition: background-color 0.2s;
-    color: var(--color-text-light); /* CAMBIO: Texto claro para visibilidad */
+button[mat-icon-button][color="warn"] mat-icon {
+  color: #d32f2f;
 }
 
-.resident-item:hover {
-    background-color: rgba(255, 255, 255, 0.1);
+table.table {
+  margin-top: 25px;
 }
 
-.resident-item.active {
-    background-color: rgba(0, 187, 255, 0.2);
-    border-left: 4px solid var(--color-highlight);
-    padding-left: 16px;
-    color: var(--color-highlight);
-    font-weight: 600;
+.table-bordered th {
+  background: #0a253e;
+  color: white;
 }
 
-.resident-item i {
-    margin-right: 8px;
-}
-
-.action-btn {
-    background: none;
-    border: none;
-    color: var(--color-text-light); /* CAMBIO: Iconos claros */
-    font-size: 0.85rem;
-    padding: 5px;
-    cursor: pointer;
-}
-
-.edit-btn:hover {
-    color: var(--color-highlight);
-}
-
-.delete-btn:hover {
-    color: var(--color-red);
-}
-
-/* Columna Derecha: Formulario */
-.resident-form-panel {
-    flex-grow: 1;
-    padding: 30px;
-    color: var(--color-dark-blue); /* Texto oscuro para el fondo blanco */
-}
-
-.resident-form-panel h2, .resident-form-panel h3 {
-    color: var(--color-dark-blue);
-    margin-bottom: 25px;
-    border-bottom: 1px solid var(--color-border);
-    padding-bottom: 5px;
-    font-weight: 400;
-}
-
-/* --- Estilo de los nuevos campos de entrada --- */
-.form-group-entry {
-    margin-bottom: 20px;
-}
-
-.form-group-entry label {
-    display: block;
-    font-size: 1rem;
-    font-weight: 600;
-    margin-bottom: 5px;
-}
-
-input[type="text"], input[type="tel"], input[type="email"] {
-    width: 100%;
-    padding: 10px 15px;
-    /* Estilo limpio para campo de entrada sobre fondo blanco */
-    background-color: var(--color-white);
-    border: 1px solid #CCCCCC;
-    border-radius: 4px;
-    color: var(--color-dark-blue);
-    font-size: 1rem;
-    transition: border-color 0.2s, box-shadow 0.2s;
-}
-
-input:focus {
-    border-color: var(--color-highlight);
-    box-shadow: 0 0 5px rgba(0, 187, 255, 0.5);
-    outline: none;
-}
-
-.form-separator {
-    height: 1px;
-    background-color: var(--color-border);
-    margin: 30px 0;
-}
-
-/* --- Tabla de Vehículos --- */
-.vehicles-table {
-    width: 100%;
-    border-collapse: collapse;
-    margin-bottom: 20px;
-}
-
-.vehicles-table thead th {
-    background-color: var(--color-highlight);
-    color: var(--color-white);
-    padding: 12px 10px;
-    text-align: left;
-    font-weight: 600;
-}
-
-.vehicles-table tbody tr {
-    border-bottom: 1px solid var(--color-border);
-}
-
-.vehicles-table tbody td {
-    padding: 10px; 
-    text-align: left;
-}
-
-.vehicles-table tbody tr:last-child {
-    border-bottom: none;
-}
-
-.input-table-cell-select {
-    /* Estilo para el select de estado */
-    background-color: var(--color-white);
-    border: 1px solid #CCCCCC;
-    padding: 6px;
-    border-radius: 3px;
-    color: var(--color-dark-blue);
-    font-size: 0.95rem;
-}
-
-.btn-icon {
-    background: none;
-    border: none;
-    cursor: pointer;
-    color: var(--color-text-muted);
-    font-size: 1rem;
-    transition: color 0.2s;
-}
-
-.delete-btn-table:hover {
-    color: var(--color-red);
-}
-
-.vehicles-table tfoot td {
-    text-align: center;
-    padding-top: 15px;
-}
-
-.btn-add-vehicle {
-    background-color: transparent;
-    border: 1px solid var(--color-dark-blue);
-    color: var(--color-dark-blue);
-    padding: 8px 15px;
-    border-radius: 4px;
-}
-
-.btn-add-vehicle:hover {
-    background-color: #F0F0F0;
-}
-
-/* --- Botones de Formulario (Abajo a la derecha) --- */
-.form-actions {
-    display: flex;
-    justify-content: flex-end;
-    gap: 15px;
-    padding-top: 20px;
-    border-top: 1px solid var(--color-border);
-    margin-top: 30px;
-}
-
-.btn-save, .btn-cancel {
-    padding: 12px 30px;
-    border: none;
-    border-radius: 4px;
-    cursor: pointer;
-    font-weight: 600;
-}
-
-.btn-save {
-    background-color: var(--color-highlight);
-    color: var(--color-white);
-}
-
-.btn-save:hover {
-    background-color: #33dfff;
-}
-
-.btn-cancel {
-    background-color: #AAAAAA;
-    color: var(--color-white);
-}
-
-.btn-cancel:hover {
-    background-color: #BBBBBB;
+.table-striped tr:nth-child(even) {
+  background: #f5f7fa;
 }

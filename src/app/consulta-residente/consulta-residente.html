@@ -1,0 +1,59 @@
+<h3 style="text-align: center">Residente</h3>
+
+<div class="form-group">
+    <label>Nombre:</label>
+    <input class="form-control" [(ngModel)]="residente.nombre" />
+</div>
+
+<div class="form-group">
+    <label>Cédula:</label>
+    <input class="form-control" [(ngModel)]="residente.cedula" />
+</div>
+
+<div class="form-group">
+    <label>Teléfono:</label>
+    <input class="form-control" [(ngModel)]="residente.telefono" />
+</div>
+<div class="form-group">
+    <label>Usuario:</label>
+    <input class="form-control" [(ngModel)]="residente.usuario" />
+</div>
+<div class="form-group">
+    <label>Contraseña:</label>
+    <input class="form-control" [(ngModel)]="residente.contrasena" />
+</div>
+<hr />
+
+<h4>Vehículos</h4>
+
+<table class="table table-bordered">
+    <thead>
+        <tr>
+            <th>Placa</th>
+            <th>Modelo</th>
+            <th>Estado</th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+        <tr *ngFor="let v of residente.vehiculos; let i = index">
+            <td><input class="form-control" [(ngModel)]="v.placa" /></td>
+            <td><input class="form-control" [(ngModel)]="v.modelo" /></td>
+            <td>
+                <select class="form-control" [(ngModel)]="v.estado">
+                    <option>Activo</option>
+                    <option>Inactivo</option>
+                </select>
+            </td>
+            <td>
+                <button class="btn btn-danger btn-sm" (click)="eliminarVehiculo(i)">X</button>
+            </td>
+        </tr>
+    </tbody>
+</table>
+
+<button class="btn btn-primary btn-sm" (click)="agregarVehiculo()">+ Añadir vehículo</button>
+
+<hr />
+
+<button class="btn btn-success mt-3" (click)="guardar()">Guardar Cambios</button>

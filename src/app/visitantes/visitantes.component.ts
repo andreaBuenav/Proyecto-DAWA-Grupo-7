@@ -1,36 +1,27 @@
-
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators, ReactiveFormsModule, } from '@angular/forms';
 import { CommonModule } from '@angular/common';
-
 import { Visitante } from '../models/visitante.model';
 import { VisitantesService } from '../visitantes.service';
+import { ConsultaVisitante } from '../consulta-visitante/consulta-visitante';
 
 @Component({
   selector: 'app-visitantes',
   templateUrl: './visitantes.component.html',
   styleUrls: ['./visitantes.component.css'],
   standalone: true,
-  imports: [CommonModule, ReactiveFormsModule,],
+  imports: [CommonModule, ConsultaVisitante],
 })
 export class VisitantesComponent implements OnInit {
-  visitanteForm: FormGroup;
-  visitantes: Visitante[] = [];
-  editandoId: number | null = null;
+   visitantes: Visitante[] = [];
+
+  // Variables del modal
+  mostrarModal = false;
+  editandoVisitante: Visitante | null = null;
 
   constructor(
-    private fb: FormBuilder,
     private visitantesService: VisitantesService
-  ) {
-
-    this.visitanteForm = this.fb.group({
-      nombreCompleto: ['', Validators.required],
-      identificacion: ['', Validators.required],
-      placaVehiculo: [''],
-      fechaInicio: ['', Validators.required],
-      fechaFin: ['', Validators.required],
-    });
-  }
+  ) {}
 
   ngOnInit(): void {
     this.cargarVisitantes();
@@ -40,35 +31,41 @@ export class VisitantesComponent implements OnInit {
     this.visitantes = this.visitantesService.getVisitantes();
   }
 
-  onSubmit(): void {
-    if (this.visitanteForm.invalid) {
-      return;
-    }
-
-    if (this.editandoId !== null) {
-      const visitanteActualizado: Visitante = {
-        id: this.editandoId,
-        ...this.visitanteForm.value,
-      };
-      this.visitantesService.updateVisitante(visitanteActualizado);
-    } else {
-      this.visitantesService.addVisitante(this.visitanteForm.value);
-    }
-
-    this.resetFormulario();
-    this.cargarVisitantes();
+  // Abrir modal para crear
+  abrirModalAgregar() {
+    this.editandoVisitante = null;
+    this.mostrarModal = true;
   }
 
+  // Abrir modal para editar
   onEditar(id: number): void {
     const visitante = this.visitantesService.getVisitanteById(id);
     if (visitante) {
-      this.editandoId = id;
-      this.visitanteForm.patchValue({
-        ...visitante,
-        fechaInicio: this.formatDateForInput(visitante.fechaInicio),
-        fechaFin: this.formatDateForInput(visitante.fechaFin),
-      });
+      this.editandoVisitante = visitante;
+      this.mostrarModal = true;
     }
+  }
+
+  // Recibir datos desde el modal
+  onGuardarDesdeModal(data: any) {
+    if (this.editandoVisitante) {
+      // Editar
+      this.visitantesService.updateVisitante({
+        id: this.editandoVisitante.id,
+        ...data,
+      });
+    } else {
+      // Crear
+      this.visitantesService.addVisitante(data);
+    }
+
+    this.cargarVisitantes();
+    this.cerrarModal();
+  }
+
+  cerrarModal() {
+    this.mostrarModal = false;
+    this.editandoVisitante = null;
   }
 
   onEliminar(id: number): void {
@@ -76,19 +73,5 @@ export class VisitantesComponent implements OnInit {
       this.visitantesService.deleteVisitante(id);
       this.cargarVisitantes();
     }
-  }
-
-  cancelarEdicion(): void {
-    this.resetFormulario();
-  }
-
-  private resetFormulario(): void {
-    this.visitanteForm.reset();
-    this.editandoId = null;
-  }
-
-  private formatDateForInput(date: Date): string {
-    const d = new Date(date);
-    return d.toISOString().slice(0, 16);
   }
 }
