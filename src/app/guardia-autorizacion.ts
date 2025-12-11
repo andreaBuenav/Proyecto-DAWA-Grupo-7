@@ -29,15 +29,6 @@ export class GuardiasService {
     localStorage.setItem('guardias', JSON.stringify(this.tablaGuardias$.value));
   }
 
-  /**
-   * Restablece la tabla a los datos por defecto (GUARDIAS_DATA)
-   * y guarda ese estado en localStorage.
-   */
-  public resetToDefaults() {
-    this.tablaGuardias$.next(GUARDIAS_DATA);
-    this.guardarEnLocalStorage();
-  }
-
   constructor() {
     const data = localStorage.getItem('guardias');
     if (data) {

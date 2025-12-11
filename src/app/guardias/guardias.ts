@@ -26,7 +26,6 @@ export class GuardiasComponent implements OnInit {
   constructor(private guardiasSrv: GuardiasService) {}
 
   ngOnInit(): void {
-    this.guardiasSrv.resetToDefaults();
     this.guardiasSrv.tablaGuardias$.subscribe(data => {
       // ensure legacy rows have both 'usuario' and 'estado' populated
       this.datosTabla = (data || []).map((r: any) => ({
