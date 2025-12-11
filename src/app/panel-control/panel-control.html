@@ -13,7 +13,8 @@
         <th>Tipo</th>
         <th>Placa</th>
         <th>Estado</th>
-        <th>Registrado</th>
+        <th>Fecha Entrada</th>
+        <th>Hora Entrada</th>
         <th>Hora de Salida</th>
       </tr>
     </thead>
@@ -22,10 +23,12 @@
         <td>{{ reg.nombre }}</td>
         <td>{{ reg.tipo }}</td>
         <td>{{ reg.placa }}</td>
-        <td>{{ reg.registrado }}</td>
+        <td>{{ reg.estado }}</td>
+        <td>{{ reg.fechaEntrada }}</td>
+        <td>{{ reg.horaEntrada }}</td>
         <td>
           <button (click)="ingresarHoraSalida(i)" [disabled]="reg.horaSalida">
-            {{ reg.horaSalida ? reg.horaSalida : 'Ingresar Salida' }}
+           {{ reg.horaSalida ? reg.horaSalida : 'Ingresar Salida' }}
           </button>
         </td>
       </tr>

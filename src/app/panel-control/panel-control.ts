@@ -1,15 +1,20 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { MatButtonModule } from '@angular/material/button';
 import { MatTableModule } from '@angular/material/table';
 import { Router } from '@angular/router';
 import { FormsModule } from '@angular/forms';
-interface Registro {
+import { AccesoService, RegistroAcceso } from '../acceso-service';
+import { BehaviorSubject } from 'rxjs';
+
+interface RegistroPanel {
   nombre: string;
-  tipo: 'Residente' | 'Visitante';
+  tipo: 'Residente' | 'Visitante' | 'No Registrado';
   placa: string;
   estado: 'ACEPTADO' | 'DENEGADO';
   registrado: 'Sí' | 'No';
+  fechaEntrada: string;
+  horaEntrada: string;
   horaSalida?: string;
 }
 
@@ -19,40 +24,54 @@ interface Registro {
   templateUrl: './panel-control.html',
   styleUrls: ['./panel-control.css'],
 })
-export class PanelControl {
+export class PanelControl implements OnInit {
 
-  constructor(private rutasPaginas:Router){}
+  constructor(
+    private rutasPaginas: Router,
+    private accesoSrv: AccesoService
+  ) {}
 
-  registros: Registro[] = [
-    {
-      nombre: 'Juan Pérez',
-      tipo: 'Residente',
-      placa: 'ABC-123',
-      estado: 'ACEPTADO',
-      registrado: 'Sí',
-    },
-    {
-      nombre: 'María López',
-      tipo: 'Visitante',
-      placa: 'XYZ-789',
-      estado: 'DENEGADO',
-      registrado: 'No',
-    },
-    {
-      nombre: 'Carlos Gómez',
-      tipo: 'Residente',
-      placa: 'DEF-456',
-      estado: 'ACEPTADO',
-      registrado: 'Sí',
-    },
-  ];
+  // Se usa para actualizar la tabla automáticamente
+  private registrosSubject = new BehaviorSubject<RegistroPanel[]>([]);
+  registros: RegistroPanel[] = [];
 
   filtro: string = '';
 
-  get registrosFiltrados(): Registro[] {
+  ngOnInit() {
+    this.cargarRegistros();
+
+    // Observa cambios del storage en vivo
+    window.addEventListener("storage", () => {
+      this.cargarRegistros();
+    });
+
+    this.registrosSubject.subscribe(data => {
+      this.registros = data;
+    });
+  }
+
+  cargarRegistros() {
+  const data: RegistroAcceso[] = this.accesoSrv.getAccesos();
+
+  const convertidos: RegistroPanel[] = data.map(reg => ({
+    nombre: reg.persona ?? 'Desconocido',
+    tipo: reg.tipo,
+    placa: reg.placa,
+    estado: (reg.acceso ? 'ACEPTADO' : 'DENEGADO') as 'ACEPTADO' | 'DENEGADO',
+    registrado: (reg.acceso ? 'Sí' : 'No') as 'Sí' | 'No',
+    fechaEntrada: reg.fecha,
+    horaEntrada: reg.hora,
+  }));
+
+  this.registrosSubject.next(convertidos);
+}
+
+
+  get registrosFiltrados(): RegistroPanel[] {
     if (!this.filtro) return this.registros;
 
     const filtroLower = this.filtro.toLowerCase();
+
     return this.registros.filter(
       (reg) =>
         reg.nombre.toLowerCase().includes(filtroLower) ||
@@ -66,5 +85,14 @@ export class PanelControl {
   ingresarHoraSalida(index: number) {
     const hora = new Date().toLocaleTimeString();
     this.registros[index].horaSalida = hora;
+
+    // Actualizar en vivo el localStorage
+    const almacenados = this.accesoSrv.getAccesos();
+    if (almacenados[index]) {
+      (almacenados as any)[index].horaSalida = hora;
+      localStorage.setItem('accesos', JSON.stringify(almacenados));
+    }
+
+    this.cargarRegistros();
   }
 }
