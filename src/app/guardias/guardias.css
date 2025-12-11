@@ -29,13 +29,6 @@ h2 {
   width: 300px;
 }
 
-.filter-box input {
-  border-radius: 12px;
-  border: 1px solid #cfd8dc;
-  padding: 10px 14px;
-  transition: 0.3s ease-in-out;
-}
-
 .filter-box input:focus {
   border-color: #0f2438;
   box-shadow: 0 0 8px rgba(15, 36, 56, 0.3);
