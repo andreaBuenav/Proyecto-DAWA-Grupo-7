@@ -68,7 +68,7 @@ export class GuardiasComponent implements OnInit {
     nombre: '',
     cedula: '',
     telefono: '',
-    usuario: 'Activo',
+    usuario: '',
     estado: 'Activo',
     contrasena: '',
     

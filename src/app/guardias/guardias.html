@@ -4,10 +4,6 @@
   <input type="text" class="form-control buscador" placeholder="Buscar guardia..." (keyup)="filtrar($event)">
   
   <button class="btn btn-success" (click)="nuevoGuardia()">+ Nuevo Guardia</button>
-<div class="top-bar">
-  <input type="text" class="form-control buscador" placeholder="Buscar guardia..." (keyup)="filtrar($event)">
-  
-  <button class="btn btn-success" (click)="nuevoGuardia()">+ Nuevo Guardia</button>
 </div>
 
 <table mat-table [dataSource]="dataSource" class="mat-elevation-z8 table table-hover">
@@ -28,9 +24,6 @@
   <ng-container matColumnDef="cedula">
     <th mat-header-cell *matHeaderCellDef>Cedula</th>
     <td mat-cell *matCellDef="let row">{{row.cedula}}</td>
-  <ng-container matColumnDef="cedula">
-    <th mat-header-cell *matHeaderCellDef>Cedula</th>
-    <td mat-cell *matCellDef="let row">{{row.cedula}}</td>
   </ng-container>
 
   <!-- Teléfono -->
@@ -46,9 +39,9 @@
   </ng-container>
 
   <!-- Estado -->
-  <ng-container matColumnDef="usuario">
-    <th mat-header-cell *matHeaderCellDef>Usuario</th>
-    <td mat-cell *matCellDef="let row">{{row.usuario}}</td>
+  <ng-container matColumnDef="estado">
+    <th mat-header-cell *matHeaderCellDef>Estado</th>
+    <td mat-cell *matCellDef="let row">{{row.estado}}</td>
   </ng-container>
 
   <!-- Contraseña -->
@@ -58,22 +51,6 @@
   </ng-container>
 
   <!-- Acciones -->
-<ng-container matColumnDef="action">
-  <th mat-header-cell *matHeaderCellDef>Acciones</th>
-  <td mat-cell *matCellDef="let row">
-
-    <!-- Botón Modificar -->
-    <button mat-icon-button color="primary" (click)="editar(row)">
-      <mat-icon>edit</mat-icon>
-    </button>
-
-    <!-- Botón Eliminar -->
-    <button mat-icon-button color="warn" (click)="eliminar(row)">
-      <mat-icon>delete</mat-icon>
-    </button>
-
-  </td>
-</ng-container>
 <ng-container matColumnDef="action">
   <th mat-header-cell *matHeaderCellDef>Acciones</th>
   <td mat-cell *matCellDef="let row">
