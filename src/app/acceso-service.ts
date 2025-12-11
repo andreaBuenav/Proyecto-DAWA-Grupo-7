@@ -13,7 +13,7 @@ export interface RegistroAcceso {
   providedIn: 'root',
 })
 export class AccesoService {
-   private accesos: RegistroAcceso[] = [];
+  private accesos: RegistroAcceso[] = [];
 
   constructor() {
     const data = localStorage.getItem('accesos');
