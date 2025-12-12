@@ -18,7 +18,7 @@ export class VisitantesService {
 
   private nextId = 2;
 
-  constructor() {}
+  constructor() { }
 
   addVisitante(visitante: Omit<Visitante, 'id'>) {
     const nuevoVisitante: Visitante = {

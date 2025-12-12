@@ -1,0 +1,131 @@
+/* Contenedor general */
+:host {
+  display: block;
+  padding: 20px;
+  background: #ffffff;
+  border-radius: 16px;
+}
+
+/* Título principal */
+h3 {
+  text-align: center;
+  color: #0f2438;
+  font-weight: 500;
+  margin-bottom: 20px;
+}
+
+/* Subtítulo */
+h4 {
+  color: #0f2438;
+  font-weight: 500;
+  margin-top: 20px;
+  margin-bottom: 10px;
+}
+
+/* Separador */
+hr {
+  border: none;
+  height: 1px;
+  background: #cfd8dc;
+  margin: 20px 0;
+}
+
+/* Grupo de formulario */
+.form-group {
+  margin-bottom: 10px;
+}
+
+.form-group label {
+  font-weight: 500;
+  color: #0f2438;
+  margin-bottom: 5px;
+  display: block;
+}
+
+/* Inputs */
+.form-control {
+  width: 90%;
+  border-radius: 10px;
+  padding: 8px 10px;
+  border: 1px solid #cfd8dc;
+  background: #fafafa;
+  transition: 0.3s;
+}
+
+.form-control:focus {
+  border-color: #0f2438;
+  background: #fff;
+  box-shadow: 0 0 8px rgba(15, 36, 56, 0.25);
+}
+
+/* Tabla */
+.table {
+  width: 100%;
+  border-collapse: separate;
+  border-spacing: 0;
+  background: #ffffff;
+  border-radius: 12px;
+  overflow: hidden;
+  margin-bottom: 10px;
+}
+
+.table thead {
+  background: rgba(0, 188, 212, 0.15);
+}
+
+.table th {
+  padding: 10px;
+  color: #0f2438;
+  font-weight: 600;
+  border-bottom: 1px solid #cfd8dc;
+}
+
+.table td {
+  padding: 10px;
+  border-bottom: 1px solid #eceff1;
+}
+
+/* Botón eliminar vehículo */
+.btn-danger.btn-sm {
+  background-color: #c62828;
+  border: none;
+  padding: 6px 10px;
+  border-radius: 8px;
+  color: white;
+  transition: 0.3s;
+}
+
+.btn-danger.btn-sm:hover {
+  background-color: #8e0000;
+}
+
+/* Botón añadir vehículo */
+.btn-primary.btn-sm {
+  background-color: #0f2438;
+  border: none;
+  padding: 8px 14px;
+  border-radius: 10px;
+  color: white;
+  font-weight: 600;
+  transition: 0.3s;
+}
+
+.btn-primary.btn-sm:hover {
+  background-color: #081726;
+}
+
+/* Botón guardar */
+.btn-success {
+  background-color: #2e7d32;
+  border: none;
+  padding: 12px;
+  border-radius: 10px;
+  font-weight: 600;
+  width: 100%;
+  color: white;
+  transition: 0.3s;
+}
+
+.btn-success:hover {
+  background-color: #1b5e20;
+}

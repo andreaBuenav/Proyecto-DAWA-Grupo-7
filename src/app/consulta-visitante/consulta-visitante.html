@@ -1,0 +1,46 @@
+<div class="modal-overlay" *ngIf="visible">
+  <div class="modal-content">
+
+    <h3>{{ editData ? 'Editar Visitante' : 'Registrar Visitante' }}</h3>
+
+    <form [formGroup]="visitanteForm" (ngSubmit)="guardar()">
+
+      <div class="form-group">
+        <label>Nombre Completo:</label>
+        <input type="text" formControlName="nombreCompleto">
+      </div>
+
+      <div class="form-group">
+        <label>Identificación:</label>
+        <input type="text" formControlName="identificacion">
+      </div>
+
+      <div class="form-group">
+        <label>Placa (opcional):</label>
+        <input type="text" formControlName="placaVehiculo">
+      </div>
+
+      <div class="form-group">
+        <label>Validez Desde:</label>
+        <input type="datetime-local" formControlName="fechaInicio">
+      </div>
+
+      <div class="form-group">
+        <label>Validez Hasta:</label>
+        <input type="datetime-local" formControlName="fechaFin">
+      </div>
+
+      <div class="acciones">
+        <button type="submit" class="btn-guardar"
+          [disabled]="visitanteForm.invalid">
+          {{ editData ? 'Actualizar' : 'Guardar' }}
+        </button>
+
+        <button type="button" class="btn-cancelar" (click)="cerrar()">
+          Cancelar
+        </button>
+      </div>
+    </form>
+
+  </div>
+</div>

@@ -10,15 +10,13 @@
 /* Título */
 h3 {
   color: #0f2438;
-  font-weight: 300;
-  font-size: 18px;
-  margin-bottom: 10px;
-  text-align: center;
+  font-weight: 400;
+  margin-bottom: 20px;
 }
 
 /* Grupo de formulario */
 .form-group {
-  margin-bottom: 8px;
+  margin-bottom: 7px;
 }
 
 .form-group label {

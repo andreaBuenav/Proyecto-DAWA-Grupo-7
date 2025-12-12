@@ -1,129 +1,93 @@
-<!DOCTYPE html>
-<html lang="es">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>SCAI-VEH</title>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
-    <link rel="stylesheet" href="gestionresidentes.css">
-</head>
-<body>
-    <div class="main-container">
-        <div class="content-area">
-            
-            <div class="management-container">
-                
-                <div class="resident-list-panel">
-                    <button class="btn-add-resident">
-                        <i class="fas fa-plus"></i> Nuevo Residente
-                    </button>
+<h2 style="text-align: center; padding-top: 5%">Gestión de Residentes</h2>
 
-                    <button class="btn-consulta-resi">
-                        <i class="fas fa-plus"></i> Consultar Residente
-                    </button>
+<div class="top-bar">
+    <input type="text" class="form-control buscador" placeholder="Buscar residente..." (keyup)="filtrar($event)">
 
-                    <button class="btn-delete-resi">
-                        <i class="fas fa-plus"></i> Eliminar Residente
-                    </button>
+    <button class="btn btn-success" (click)="nuevoResidente()">+ Nuevo Residente</button>
+</div>
 
-                  <!--  <ul class="resident-list">
-                        <li class="resident-item active">
-                            <i class="fas fa-user-circle"></i> Juan Perez
-                            <div class="actions">
-                                <button class="action-btn edit-btn btn btn-warning btn-sm m-1">Editar</button>
-                                <button class="action-btn delete-btn"><i class="fas fa-trash-alt"></i></button>
-                            </div>
-                        </li>
-                        <li class="resident-item">
-                            <i class="fas fa-user-circle"></i> María Rodriguez
-                            <div class="actions">
-                                <button class="action-btn edit-btn btn btn-warning ">Editar</button>
-                                <button class="action-btn delete-btn"><i class="fas fa-trash-alt"></i></button>
-                            </div>
-                        </li>
-                        <li class="resident-item">
-                            <i class="fas fa-user-circle"></i> Carlos Gómez
-                            <div class="actions">
-                                <button class="action-btn edit-btn">Editar</button>
-                                <button class="action-btn delete-btn"><i class="fas fa-trash-alt"></i></button>
-                            </div>
-                        </li>
-                    </ul>--> 
-                </div>
+<table mat-table [dataSource]="dataSource" class="mat-elevation-z8 table table-hover">
 
-                <div class="resident-form-panel">
-                    <h2>Datos del Residente</h2>
-                    <form>
-                        <div class="form-group-entry">
-                            <label for="nombre">Nombre Completo</label>
-                            <input type="text" id="nombre" name="nombre" placeholder="Ingrese el nombre completo">
-                        </div>
-                        <div class="form-group-entry">
-                            <label for="identificacion">Número de Identificación</label>
-                            <input type="text" id="identificacion" name="identificacion" placeholder="Ingrese Cédula o Identificación" >
-                        </div>
-                        <div class="form-group-entry">
-                            <label for="telefono">Teléfono</label>
-                            <input type="tel" id="telefono" name="telefono" placeholder="Ingrese número de contacto" >
-                        </div>
-                        <div class="form-group-entry">
-                            <label for="email">Correo Electrónico</label>
-                            <input type="email" id="email" name="email" placeholder="Correo Electrónico">
-                        </div>
-                        
-                        <div class="form-separator"></div>
+    <!-- ID -->
+    <ng-container matColumnDef="id">
+        <th mat-header-cell *matHeaderCellDef>ID</th>
+        <td mat-cell *matCellDef="let row">{{ row.id }}</td>
+    </ng-container>
 
-                        <h3>Vehículos Asociados</h3>
-                        <table class="vehicles-table">
-                            <thead>
-                                <tr>
-                                    <th>Placa</th>
-                                    <th>Modelo</th>
-                                    <th>Estado</th>
-                                    <th class="col-actions">Acciones</th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                <tr>
-                                    <td>XYC-123</td>
-                                    <td>Toyota Corolla</td>
-                                    <td>
-                                        <select class="input-table-cell-select">
-                                            <option>Activo</option>
-                                            <option>Inactivo</option>
-                                        </select>
-                                    </td>
-                                    <td><button type="button" class="btn-icon delete-btn-table"><i class="fas fa-trash-alt"></i></button></td>
-                                </tr>
-                                <tr>
-                                    <td>ABC-997</td>
-                                    <td>Ford F-150</td>
-                                    <td>
-                                        <select class="input-table-cell-select">
-                                            <option>Activo</option>
-                                            <option>Inactivo</option>
-                                        </select>
-                                    </td>
-                                    <td><button type="button" class="btn-icon delete-btn-table"><i class="fas fa-trash-alt"></i></button></td>
-                                </tr>
-                            </tbody>
-                            <tfoot>
-                                <tr>
-                                    <td colspan="4">
-                                        <button type="button" class="btn-add-vehicle"><i class="fas fa-car"></i> Añadir Vehículo</button>
-                                    </td>
-                                </tr>
-                            </tfoot>
-                        </table>
+    <!-- Nombre -->
+    <ng-container matColumnDef="nombre">
+        <th mat-header-cell *matHeaderCellDef>Nombre</th>
+        <td mat-cell *matCellDef="let row">{{ row.nombre }}</td>
+    </ng-container>
 
-                        <div class="form-actions">
-                            <button type="submit" class="btn-save">Guardar Cambios</button>
-                            <button type="button" class="btn-cancel">Cancelar</button>
-                        </div>
-                    </form>
-                </div>
-            </div>
-        </div>
-    </div>
-</body>
-</html>
+    <!-- Cédula -->
+    <ng-container matColumnDef="cedula">
+        <th mat-header-cell *matHeaderCellDef>Cédula</th>
+        <td mat-cell *matCellDef="let row">{{ row.cedula }}</td>
+    </ng-container>
+
+    <!-- Teléfono -->
+    <ng-container matColumnDef="telefono">
+        <th mat-header-cell *matHeaderCellDef>Teléfono</th>
+        <td mat-cell *matCellDef="let row">{{ row.telefono }}</td>
+    </ng-container>
+
+     <!-- Usuario -->
+    <ng-container matColumnDef="usuario">
+        <th mat-header-cell *matHeaderCellDef>Usuario</th>
+        <td mat-cell *matCellDef="let row">{{ row.usuario }}</td>
+    </ng-container>
+
+     <!-- Contraseña -->
+    <ng-container matColumnDef="contrasena">
+        <th mat-header-cell *matHeaderCellDef>Contraseña</th>
+        <td mat-cell *matCellDef="let row">{{ row.contrasena }}</td>
+    </ng-container>
+
+    <!-- Acciones -->
+    <ng-container matColumnDef="action">
+        <th mat-header-cell *matHeaderCellDef>Acciones</th>
+        <td mat-cell *matCellDef="let row">
+
+            <button mat-icon-button color="primary" (click)="editar(row)">
+                <mat-icon>edit</mat-icon>
+            </button>
+
+            <button mat-icon-button color="warn" (click)="eliminar(row)">
+                <mat-icon>delete</mat-icon>
+            </button>
+
+        </td>
+    </ng-container>
+
+    <tr mat-header-row *matHeaderRowDef="columnas"></tr>
+    <tr mat-row *matRowDef="let row; columns: columnas"></tr>
+
+</table>
+
+<h3 style="margin-top: 30px;">Vehículos Registrados</h3>
+
+<table class="table table-bordered table-striped">
+    <thead>
+        <tr>
+            <th>Dueño</th>
+            <th>Placa</th>
+            <th>Modelo</th>
+            <th>Estado</th>
+        </tr>
+    </thead>
+
+    <tbody>
+        <!-- Recorremos los residentes -->
+        <ng-container *ngFor="let r of datosTabla">
+            <!--Recorremos los vehículos del residente -->
+            <tr *ngFor="let v of r.vehiculos">
+                <td>{{ r.nombre }}</td>
+                <td>{{ v.placa }}</td>
+                <td>{{ v.modelo }}</td>
+                <td>{{ v.estado }}</td>
+            </tr>
+
+        </ng-container>
+    </tbody>
+</table>
