@@ -7,6 +7,7 @@ export interface RegistroAcceso {
   fecha: string;
   hora: string;
   acceso: boolean;
+  horaSalida?: string;
 }
 
 @Injectable({

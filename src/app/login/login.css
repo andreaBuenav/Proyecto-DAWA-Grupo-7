@@ -1,10 +1,33 @@
 
 .main {
-  background: linear-gradient(135deg, #CCA10C 50%, #7e6403 50%);
+  position: relative;      /* Necesario para que fondo-login quede dentro */
+  height: 100vh;
+  margin: 0;
+  display: flex;
+  justify-content: center; 
+  align-items: center;     
+  background-color: black; 
+  padding-top: 40px;
 }
 
+.fondo-login {
+  position: absolute;       /* Detrás del login */
+
+   width: 90%;   
+  height:85%; 
+  background-image: url('../../assets/images/LogoProyectoBN.png');
+  background-repeat: no-repeat;
+  background-position: center center;
+  background-size: contain; 
+  opacity: 0.2;            
+  z-index: 0;               
+}
+
+/* Login card encima del fondo */
 .login-card {
-  background-color: rgba(10, 15, 31, 0.9);
+  position: relative;        /* Para que esté encima */
+  z-index: 1;                /* Siempre encima del fondo */
+  background-color: #cca20cdd; /* Fondo semi-transparente */
   width: 100%;
   max-width: 400px;
   border: 1.5px solid #90909070; 
@@ -12,27 +35,29 @@
   border-radius: 10px;
 }
 
+/* Input y estilos internos */
 .input-group {
   background-color: #ffffff14;
-  border: 1px solid #7e6403
+  border: 1px solid #7e6403;
 }
 
 .input-group-text mat-icon {
-  color:#000000; 
+  color: #000000;
 }
 
 .form-control {
   background: transparent;
-  color:#000000 ;
+  color: #000000;
 }
 
 .form-control::placeholder {
-  color: #eae4e4ba;
+  color: #eae4e4;
 }
 
+/* Botón */
 .btn {
-  background-color: #CCA10C;
-  color: #0a0f1f;
+  background-color: #ffffff;
+  color: #000000;
   font-weight: bold;
   letter-spacing: 1px;
   transition: all 0.3s ease;
@@ -47,8 +72,9 @@
   box-shadow: 0 0 15px rgba(199, 199, 199, 0.6);
 }
 
+/* Título */
 h2 {
   font-family: 'Poppins', sans-serif;
-  color: #00e5ff; 
+  color: #131312; 
   text-shadow: 0 0 8px #cccccc86;
 }

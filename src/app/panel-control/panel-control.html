@@ -27,8 +27,8 @@
         <td>{{ reg.fechaEntrada }}</td>
         <td>{{ reg.horaEntrada }}</td>
         <td>
-          <button (click)="ingresarHoraSalida(i)" [disabled]="reg.horaSalida">
-           {{ reg.horaSalida ? reg.horaSalida : 'Ingresar Salida' }}
+           <button (click)="ingresarHoraSalida(i)" [disabled]="reg.horaSalida">
+      {{ reg.horaSalida ? reg.horaSalida : 'Ingresar Salida' }}
           </button>
         </td>
       </tr>
