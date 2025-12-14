@@ -29,11 +29,13 @@ body {
 
 
 .header .brand {
-  font-size: 2rem;
+  font-size: 2.2rem;
   font-weight: 600;
   color: #ffffff;
   letter-spacing: 1px;
   text-shadow: 0 0 6px rgba(170, 167, 167, 0.5);
+  white-space: nowrap;
+  flex-shrink: 0;
 }
 
 /* Botones translúcidos coherentes */
@@ -42,11 +44,12 @@ body {
   border: 1px solid #EBBC2F;
   text-shadow: 0 0 6px #645012;
   color: #ffffff;
-  padding: 0.4rem 1rem;
+  padding: 0.5rem 1.2rem;
   margin-left: 0.5rem;
   border-radius: 6px;
   cursor: pointer;
   font-weight: 500;
+  font-size: 1rem;
   transition: all 0.3s ease;
   backdrop-filter: blur(4px);
 }
@@ -61,4 +64,53 @@ body {
 /* Espaciado general para evitar que el contenido quede debajo del header */
 main {
   padding-top: 80px;
+}
+
+/* Media Queries para Responsividad */
+@media (max-width: 900px) {
+  .header {
+    padding: 0.4rem 0.8rem;
+    padding-left: 50px;
+  }
+
+  .header .brand {
+    font-size: 1.3rem;
+  }
+
+  .header .actions {
+    display: flex;
+    gap: 0.25rem;
+    flex-wrap: wrap;
+    align-items: center;
+  }
+
+  .header .actions button {
+    padding: 0.25rem 0.6rem;
+    font-size: 0.75rem;
+    margin-left: 0;
+  }
+
+  .header .actions span {
+    font-size: 0.75rem;
+  }
+}
+
+@media (max-width: 480px) {
+  .header {
+    padding: 0.3rem 0.5rem;
+    padding-left: 48px;
+  }
+
+  .header .brand {
+    font-size: 1.1rem;
+  }
+
+  .header .actions button {
+    padding: 0.2rem 0.4rem;
+    font-size: 0.65rem;
+  }
+
+  .header .actions span {
+    font-size: 0.65rem;
+  }
 }

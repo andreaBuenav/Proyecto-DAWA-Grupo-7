@@ -3,6 +3,12 @@ h2 {
   color: #0a253e;
 }
 
+h3 {
+  font-weight: 600;
+  color: #0a253e;
+  font-size: 1.5rem;
+}
+
 .top-bar {
   display: flex;
   justify-content: space-between;
@@ -57,4 +63,103 @@ table.table {
 
 .table-striped tr:nth-child(even) {
   background: #f5f7fa;
+}
+
+/* Media Queries para Responsive */
+@media (max-width: 900px) {
+  .top-bar {
+    flex-direction: column;
+    gap: 10px;
+    align-items: stretch;
+  }
+
+  .buscador {
+    width: 100%;
+  }
+
+  h2 {
+    font-size: 1.4rem;
+    margin: 10px 0;
+  }
+
+  h3 {
+    font-size: 1.3rem;
+  }
+
+  table.mat-elevation-z8,
+  table.table {
+    font-size: 0.75rem;
+    display: block;
+    overflow-x: auto;
+    white-space: nowrap;
+  }
+
+  th.mat-header-cell,
+  td.mat-cell {
+    padding: 8px 4px;
+    font-size: 0.75rem;
+  }
+
+  .table-bordered th,
+  .table-bordered td {
+    padding: 6px 4px;
+    font-size: 0.75rem;
+  }
+
+  button[mat-icon-button] mat-icon {
+    font-size: 18px;
+  }
+}
+
+@media (max-width: 480px) {
+  h2 {
+    font-size: 1.1rem;
+    margin: 8px 0;
+  }
+
+  h3 {
+    font-size: 1rem;
+    margin: 15px 0 10px 0;
+  }
+
+  table.mat-elevation-z8,
+  table.table {
+    font-size: 0.65rem;
+    display: block;
+    overflow-x: auto;
+    -webkit-overflow-scrolling: touch;
+  }
+
+  th.mat-header-cell,
+  td.mat-cell {
+    padding: 4px 2px;
+    font-size: 0.65rem;
+    white-space: nowrap;
+  }
+
+  .table-bordered th,
+  .table-bordered td {
+    padding: 4px 2px;
+    font-size: 0.65rem;
+    white-space: nowrap;
+  }
+
+  button[mat-icon-button] {
+    width: 30px;
+    height: 30px;
+    line-height: 30px;
+  }
+
+  button[mat-icon-button] mat-icon {
+    font-size: 16px;
+  }
+
+  .buscador {
+    font-size: 0.85rem;
+  }
+
+  button {
+    font-size: 0.8rem;
+    padding: 6px 10px;
+  }
 }

@@ -68,3 +68,57 @@ button:disabled {
   color: red;
   font-weight: bold;
 }
+
+/* Media Queries para Responsive */
+@media (max-width: 900px) {
+  .contenedor {
+    margin: 10px;
+    padding: 10px;
+  }
+
+  .filtro {
+    text-align: center;
+  }
+
+  .filtro input {
+    width: 100%;
+    max-width: 300px;
+  }
+
+  table {
+    font-size: 0.85rem;
+  }
+
+  th, td {
+    padding: 8px 5px;
+  }
+
+  button {
+    padding: 4px 8px;
+    font-size: 0.85rem;
+  }
+}
+
+@media (max-width: 480px) {
+  h2 {
+    font-size: 1.2rem;
+  }
+
+  table {
+    font-size: 0.75rem;
+  }
+
+  th, td {
+    padding: 6px 3px;
+  }
+
+  button {
+    padding: 3px 6px;
+    font-size: 0.75rem;
+  }
+
+  /* Hacer tabla con scroll horizontal si es necesario */
+  .contenedor {
+    overflow-x: auto;
+  }
+}

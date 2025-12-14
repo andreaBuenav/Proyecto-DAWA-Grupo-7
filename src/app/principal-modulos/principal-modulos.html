@@ -15,34 +15,34 @@
         <h1 class="titulo-bienvenida">BIENVENIDO  AL  SISTEMA</h1>
          
         <div class="menu-modulos">
-            <button class="modulo-item" type="button" (click)="mostrarGuardias()">
+            <button *ngIf="puedeVerGuardias()" class="modulo-item" type="button" (click)="mostrarGuardias()">
                 <i class="fas fa-shield-alt modulo-icono"></i>
                 <span class="modulo-texto">Gestión de Guardias</span>
             </button>
             
-            <button class="modulo-item" type="button" (click)="mostrarResidentes()">
+            <button *ngIf="puedeVerResidentes()" class="modulo-item" type="button" (click)="mostrarResidentes()">
                 <i class="fa-solid fa-people-roof modulo-icono"></i>
                 <span class="modulo-texto">Gestión de Residentes</span>
             </button>
         
 
-            <button class="modulo-item" type="button" (click) = mostrarAudit()>
+            <button *ngIf="puedeVerAudit()" class="modulo-item" type="button" (click)="mostrarAudit()">
                 <i class="fas fa-chart-line modulo-icono"></i>
                 <span class="modulo-texto">Auditoría</span>
 
             </button>
             
-            <button class="modulo-item" type="button" (click) = mostrarVisitantes()>
+            <button *ngIf="puedeVerVisitantes()" class="modulo-item" type="button" (click)="mostrarVisitantes()">
                 <i class="fa-solid fa-address-card modulo-icono"></i>
                 <span class="modulo-texto">Visitantes</span>
             </button>
                         
-            <button class="modulo-item" type="button" (click) = mostrarLpr()>
+            <button *ngIf="puedeVerLpr()" class="modulo-item" type="button" (click)="mostrarLpr()">
                 <i class="fa-solid fa-users-viewfinder modulo-icono"></i>
                 <span class="modulo-texto">LPR</span>
             </button>
 
-            <button class="modulo-item" type="button" (click) = mostrarPanelControl()>
+            <button *ngIf="puedeVerPanelControl()" class="modulo-item" type="button" (click)="mostrarPanelControl()">
                 <i class="fa-solid fa-chalkboard-user modulo-icono"></i>
                 <span class="modulo-texto">Panel de control de Acceso</span>
             </button>

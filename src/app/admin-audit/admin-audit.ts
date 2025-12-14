@@ -1,36 +1,24 @@
 import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
-// Importaciones de Angular Material
 import { MatTableModule, MatTableDataSource } from '@angular/material/table'; 
 import { MatButtonModule } from '@angular/material/button'; 
 import { MatSelectModule } from '@angular/material/select';
 import { MatFormFieldModule } from '@angular/material/form-field';
-import { FormsModule } from '@angular/forms'; // Necesario para ngModel
-import { delay, of } from 'rxjs'; 
+import { FormsModule } from '@angular/forms';
+import jsPDF from 'jspdf';
+import autoTable from 'jspdf-autotable';
+import * as XLSX from 'xlsx';
+import { AccesoService, RegistroAcceso } from '../acceso-service'; 
 
-// Interfaz para la estructura de datos
+
 interface Movimiento {
   id: number;
   placa: string;
   horaAcceso: string;
   horaSalida: string;
-  tiempoPermanencia: string;
-  tipoUsuario: 'Residente' | 'Visitante';
-  tipoPlaca: 'Particular' | 'Comercial'; 
-}
-
-// Simulación de datos
-const initialAuditData: Movimiento[] = [
-    { id: 1, placa: 'ABC-123', horaAcceso: '2024-10-26 09:30', horaSalida: '10:50', tiempoPermanencia: '1h 15min', tipoUsuario: 'Residente', tipoPlaca: 'Particular' },
-    { id: 2, placa: 'XYZ-987', horaAcceso: '2024-10-26 11:00', horaSalida: '12:00', tiempoPermanencia: '1h 00min', tipoUsuario: 'Residente', tipoPlaca: 'Particular' },
-    { id: 3, placa: 'DEF-456', horaAcceso: '2024-10-26 12:00', horaSalida: '13:00', tiempoPermanencia: '1h 00min', tipoUsuario: 'Visitante', tipoPlaca: 'Comercial' },
-    { id: 4, placa: 'GHI-789', horaAcceso: '2024-10-26 14:00', horaSalida: '15:30', tiempoPermanencia: '1h 30min', tipoUsuario: 'Residente', tipoPlaca: 'Particular' },
-    { id: 5, placa: 'JKL-012', horaAcceso: '2024-10-26 16:10', horaSalida: '16:45', tiempoPermanencia: '0h 35min', tipoUsuario: 'Visitante', tipoPlaca: 'Comercial' },
-];
-
-// Servicio simulado para inyección
-export class AuditoriaServiceSimulado {
-    public tablaAuditoria$ = of(initialAuditData).pipe(delay(100));
+  tipoUsuario: 'Residente' | 'Visitante' | 'No Registrado';
+  persona: string;
+  estado: string;
 }
 
 @Component({
@@ -46,31 +34,50 @@ export class AuditoriaServiceSimulado {
   ],
   templateUrl: './admin-audit.html',
   styleUrls: ['./admin-audit.css'],
-  providers: [AuditoriaServiceSimulado], 
 })
 export class AdminAudit implements OnInit {
   
-  // Columnas visibles en la tabla (similar a tu componente Guardias)
-  columnas: string[] = ['id', 'placa', 'horaAcceso', 'horaSalida', 'tiempoPermanencia', 'tipoUsuario', 'tipoPlaca'];
+  columnas: string[] = ['persona', 'placa', 'horaAcceso', 'horaSalida', 'tipoUsuario'];
   
   dataSource = new MatTableDataSource<Movimiento>([]);
   datosTabla: Movimiento[] = []; 
   
-  // Modelos para los filtros del template
   tipoUsuarioFiltro: string = '';
-  tipoPlacaFiltro: string = '';
   busquedaPlaca: string = ''; 
 
   pestanaActiva: string = 'Auditoría';
 
-  constructor(private auditoriaSrv: AuditoriaServiceSimulado) {}
+  constructor(private accesoSrv: AccesoService) {}
 
   ngOnInit(): void {
-    this.auditoriaSrv.tablaAuditoria$.subscribe(data => {
-      this.datosTabla = data; 
-      this.dataSource = new MatTableDataSource<Movimiento>(data);
-      this.dataSource.filterPredicate = this.customFilterPredicate;
+    this.cargarDatos();
+    
+    // Escuchar cambios en localStorage
+    window.addEventListener('storage', () => {
+      this.cargarDatos();
     });
+  }
+
+  cargarDatos(): void {
+    const registros: RegistroAcceso[] = this.accesoSrv.getAccesos();
+    
+    // Convertir RegistroAcceso a Movimiento
+    this.datosTabla = registros.map((reg, index) => {
+      const entrada = new Date(`${reg.fecha} ${reg.hora}`);
+      const salida = reg.horaSalida ? new Date(`${reg.fecha} ${reg.horaSalida}`) : null;
+      return {
+        id: index + 1,
+        placa: reg.placa,
+        horaAcceso: `${reg.fecha} ${reg.hora}`,
+        horaSalida: reg.horaSalida ? `${reg.fecha} ${reg.horaSalida}` : 'En curso',
+        tipoUsuario: reg.tipo,
+        persona: reg.persona || 'Desconocido',
+        estado: reg.acceso ? 'ACEPTADO' : 'DENEGADO'
+      };
+    });
+    
+    this.dataSource = new MatTableDataSource<Movimiento>(this.datosTabla);
+    this.dataSource.filterPredicate = this.customFilterPredicate;
   }
 
   // Predicado para filtros combinados (Placa + Selects)
@@ -85,12 +92,7 @@ export class AdminAudit implements OnInit {
       ? data.tipoUsuario.toLowerCase() === searchTerms.tipoUsuario.toLowerCase()
       : true;
 
-    // 3. Filtro Tipo de Placa
-    const placaTypeMatch = searchTerms.tipoPlaca 
-      ? data.tipoPlaca.toLowerCase() === searchTerms.tipoPlaca.toLowerCase()
-      : true;
-
-    return placaMatch && usuarioMatch && placaTypeMatch;
+    return placaMatch && usuarioMatch;
   }
 
   // Se llama en (keyup) del input y (selectionChange) de los selects
@@ -98,20 +100,86 @@ export class AdminAudit implements OnInit {
     const filterObject = {
       placa: this.busquedaPlaca,
       tipoUsuario: this.tipoUsuarioFiltro,
-      tipoPlaca: this.tipoPlacaFiltro,
     };
     this.dataSource.filter = JSON.stringify(filterObject);
   }
 
+  /**
+   * Cambia la pestaña activa en la interfaz.
+   * @param pestana - Nombre de la pestaña a activar
+   */
   cambiarPestana(pestana: string) {
     this.pestanaActiva = pestana;
   }
 
+  /**
+   * Exporta los datos filtrados de la tabla a un archivo PDF.
+   * Genera un documento con el reporte de auditoría de accesos.
+   */
   exportarPDF() {
-    console.log('Exportando a PDF...');
+    const doc = new jsPDF();
+    
+    doc.setFontSize(18);
+    doc.text('Reporte de Auditoría de Accesos', 14, 15);
+    
+    doc.setFontSize(11);
+    doc.text(`Fecha de generación: ${new Date().toLocaleDateString()}`, 14, 25);
+    
+    const datos = this.dataSource.filteredData;
+    
+    const filas = datos.map(item => [
+      item.id,
+      item.persona,
+      item.placa,
+      item.horaAcceso,
+      item.horaSalida,
+      item.tipoUsuario,
+    ]);
+
+    autoTable(doc, {
+      head: [['#', 'Nombre', 'Placa', 'Hora Acceso', 'Hora Salida', 'Tipo Usuario']],
+      body: filas,
+      startY: 30,
+      theme: 'striped',
+      headStyles: { fillColor: [37, 37, 37] },
+      styles: { fontSize: 9 },
+      margin: { top: 30 }
+    });
+    
+    doc.save(`auditoria_${new Date().getTime()}.pdf`);
   }
 
+  /**
+   * Exporta los datos filtrados de la tabla a un archivo Excel.
+   * Genera una hoja de cálculo con el reporte de auditoría de accesos.
+   */
   exportarExcel() {
-    console.log('Exportando a Excel...');
+    const datos = this.dataSource.filteredData;
+    
+    const datosExcel = datos.map(item => ({
+      'ID': item.id,
+      'Placa': item.placa,
+      'Hora Acceso': item.horaAcceso,
+      'Hora Salida': item.horaSalida,
+      'Tipo Usuario': item.tipoUsuario,
+    }));
+    
+    // Crear hoja de cálculo
+    const worksheet = XLSX.utils.json_to_sheet(datosExcel);
+    const workbook = XLSX.utils.book_new();
+    XLSX.utils.book_append_sheet(workbook, worksheet, 'Auditoría');
+    
+    // Ajustar ancho de columnas
+    const maxWidth = datosExcel.reduce((w, r) => Math.max(w, r.Placa.length), 10);
+    worksheet['!cols'] = [
+      { wch: 5 },  // ID
+      { wch: maxWidth }, // Placa
+      { wch: 20 }, // Hora Acceso
+      { wch: 20 }, // Hora Salida
+      { wch: 15 }, // Tipo Usuario
+    ];
+    
+    // Guardar el archivo Excel
+    XLSX.writeFile(workbook, `auditoria_${new Date().getTime()}.xlsx`);
   }
 }

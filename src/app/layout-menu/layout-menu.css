@@ -1,4 +1,4 @@
-menu-lateral {
+.menu-lateral {
   width: 240px;
   position: fixed;
   top: 0;
@@ -7,6 +7,31 @@ menu-lateral {
 }
 
 .contenido-layout {
-  margin-left: 240px; /* igual al ancho del menú */
+  margin-left: 240px;
   padding: 20px;
+  transition: margin-left 0.3s ease;
+}
+
+/* DESKTOP */
+@media (min-width: 901px) {
+  .contenido-layout {
+    margin-left: 240px;
+    padding: 20px;
+  }
+}
+
+/* MÓVILES */
+@media (max-width: 900px) {
+  .contenido-layout {
+    margin-left: 0;
+    padding: 15px;
+    padding-top: 70px;
+  }
+}
+
+@media (max-width: 480px) {
+  .contenido-layout {
+    padding: 10px;
+    padding-top: 60px;
+  }
 }

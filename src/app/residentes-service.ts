@@ -1,21 +1,6 @@
 import { Injectable } from '@angular/core';
 import { BehaviorSubject } from 'rxjs';
-
-export interface Vehiculo {
-  placa: string;
-  modelo: string;
-  estado: string;
-}
-
-export interface Residente {
-  id: number;
-  nombre: string;
-  cedula: string;
-  telefono: string;
-  usuario: string;
-  contrasena: string;
-  vehiculos: Vehiculo[];
-}
+import { Residente } from './models/programData';
 
 const RESIDENTES_DATA: Residente[] = [
   {
@@ -43,14 +28,25 @@ const RESIDENTES_DATA: Residente[] = [
   }
 ];
 
+/**
+ * Servicio para gestionar la información de residentes y sus vehículos.
+ * Utiliza BehaviorSubject para mantener el estado reactivo y localStorage para persistencia.
+ */
 @Injectable({
   providedIn: 'root'
 })
 export class ResidentesService {
 
+  /** Observable del residente actualmente seleccionado */
   residenteSeleccionado$ = new BehaviorSubject<any>({});
+  
+  /** Observable con la lista completa de residentes */
   tablaResidentes$ = new BehaviorSubject<any>(RESIDENTES_DATA);
 
+  /**
+   * Constructor del servicio.
+   * Carga los residentes desde localStorage si existen, o usa los datos por defecto.
+   */
   constructor() {
     const data = localStorage.getItem('residentes');
     if (data) {
@@ -58,6 +54,10 @@ export class ResidentesService {
     }
   }
 
+  /**
+   * Guarda la lista actual de residentes en localStorage.
+   * Utilizado para persistir los cambios realizados en la gestión de residentes.
+   */
   public guardarEnLocalStorage() {
     localStorage.setItem('residentes', JSON.stringify(this.tablaResidentes$.value));
   }

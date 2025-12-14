@@ -1,7 +1,7 @@
 import { Component, EventEmitter, Input, Output } from '@angular/core';
 import { FormBuilder, FormGroup, Validators, ReactiveFormsModule } from '@angular/forms';
 import { CommonModule } from '@angular/common';
-import { Visitante } from '../models/visitante.model';
+import { Visitante } from '../models/programData';
 
 @Component({
   selector: 'app-consulta-visitante',

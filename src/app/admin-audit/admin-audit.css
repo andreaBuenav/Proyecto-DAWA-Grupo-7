@@ -54,7 +54,6 @@
     width: 200px; 
 }
 
-/* Sobrescribir estilos de Angular Material para el tema oscuro */
 :host ::ng-deep .mat-form-field-label,
 :host ::ng-deep .mat-select-value {
     color: var(--text-medium) !important;
@@ -64,24 +63,22 @@
     color: rgba(0, 188, 212, 0.3) !important;
 }
 
-/* Botones de Exportación */
 .btn-export {
     font-weight: 600;
     transition: all 0.3s ease;
 }
 
 .pdf-btn {
-    background-color: #f44336 !important; /* Rojo Material */
+    background-color: #f44336 !important;
     color: white !important;
     margin-left: 20px; 
 }
 
 .excel-btn {
-    background-color: #4caf50 !important; /* Verde Material */
+    background-color: #4caf50 !important;
     color: white !important;
 }
 
-/* --- MatTable --- */
 .data-table-wrapper {
     overflow-x: auto;
     background-color: var(--secondary-bg);
@@ -115,7 +112,6 @@
     background-color: rgba(0, 188, 212, 0.05) !important;
 }
 
-/* Pie de tabla */
 .table-footer {
     padding: 10px 15px;
     text-align: left;
@@ -125,7 +121,6 @@
     margin-top: 10px;
 }
 
-/* Placeholder para pestañas inactivas */
 .placeholder-content {
     text-align: center;
     padding: 50px;
