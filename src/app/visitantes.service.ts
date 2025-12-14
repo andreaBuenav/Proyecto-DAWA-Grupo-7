@@ -1,6 +1,10 @@
 import { Injectable } from '@angular/core';
-import { Visitante } from './models/visitante.model'; 
+import { Visitante } from './models/programData'; 
 
+/**
+ * Servicio para gestionar los visitantes programados del sistema.
+ * Permite operaciones CRUD sobre visitantes y sus períodos de validez.
+ */
 @Injectable({
   providedIn: 'root',
 })
@@ -20,6 +24,11 @@ export class VisitantesService {
 
   constructor() { }
 
+  /**
+   * Agrega un nuevo visitante al sistema.
+   * Genera automáticamente un ID único para el visitante.
+   * @param visitante - Datos del visitante sin el ID
+   */
   addVisitante(visitante: Omit<Visitante, 'id'>) {
     const nuevoVisitante: Visitante = {
       ...visitante,
@@ -28,16 +37,27 @@ export class VisitantesService {
     this.visitantes.push(nuevoVisitante);
   }
 
-
+  /**
+   * Obtiene la lista completa de visitantes registrados.
+   * @returns Array de visitantes
+   */
   getVisitantes(): Visitante[] {
     return this.visitantes;
   }
 
+  /**
+   * Busca un visitante por su ID.
+   * @param id - ID del visitante a buscar
+   * @returns El visitante encontrado o undefined si no existe
+   */
   getVisitanteById(id: number): Visitante | undefined {
     return this.visitantes.find((v) => v.id === id);
   }
 
-
+  /**
+   * Actualiza los datos de un visitante existente.
+   * @param visitanteActualizado - Visitante con los datos actualizados
+   */
   updateVisitante(visitanteActualizado: Visitante) {
     const index = this.visitantes.findIndex(
       (v) => v.id === visitanteActualizado.id
@@ -47,6 +67,10 @@ export class VisitantesService {
     }
   }
 
+  /**
+   * Elimina un visitante del sistema.
+   * @param id - ID del visitante a eliminar
+   */
   deleteVisitante(id: number) {
     const index = this.visitantes.findIndex((v) => v.id === id);
     if (index !== -1) {

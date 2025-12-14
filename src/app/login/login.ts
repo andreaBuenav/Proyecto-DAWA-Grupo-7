@@ -5,6 +5,10 @@ import { MatIcon } from '@angular/material/icon';
 import { Router } from '@angular/router';
 import { AutorizacionService } from '../autorizacion-service';
 
+/**
+ * Componente de inicio de sesión del sistema.
+ * Permite autenticar usuarios mediante credenciales.
+ */
 @Component({
   selector: 'app-login',
   imports: [CommonModule, FormsModule, MatIcon],
@@ -17,24 +21,17 @@ export class Login {
 
   constructor(private rutasPaginas:Router, private autoriza:AutorizacionService) {}
 
+  /**
+   * Procesa el intento de inicio de sesión.
+   * Valida las credenciales y redirige al usuario si son correctas.
+   */
   onAccept() {
-    const userCorrecto = this.autoriza.usuarioSistema.user;
-  const passCorrecto = this.autoriza.usuarioSistema.password;
-
-  if (this.user === userCorrecto && this.password === passCorrecto) {
-
-    alert('Acceso concedido');
-
-    // Actualiza el estado global
-    this.autoriza.logeado$.next(true);
-    this.autoriza.usuarioLogeado$.next(this.autoriza.usuarioSistema.nombreUsuario);
-
-    // Redirige al principal
-    this.rutasPaginas.navigate(['/principal']);
-
-  } else {
-    alert('Error en credenciales');
-  }
+    if (this.autoriza.autenticar(this.user, this.password)) {
+      alert('Acceso concedido');
+      this.rutasPaginas.navigate(['/principal']);
+    } else {
+      alert('Error en credenciales');
+    }
   }
 
 

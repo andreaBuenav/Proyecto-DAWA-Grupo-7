@@ -1,10 +1,14 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators, ReactiveFormsModule, } from '@angular/forms';
 import { CommonModule } from '@angular/common';
-import { Visitante } from '../models/visitante.model';
+import { Visitante } from '../models/programData';
 import { VisitantesService } from '../visitantes.service';
 import { ConsultaVisitante } from '../consulta-visitante/consulta-visitante';
 
+/**
+ * Componente para gestionar los visitantes programados.
+ * Permite crear, editar y eliminar visitantes mediante un modal.
+ */
 @Component({
   selector: 'app-visitantes',
   templateUrl: './visitantes.component.html',
@@ -27,17 +31,25 @@ export class VisitantesComponent implements OnInit {
     this.cargarVisitantes();
   }
 
+  /**
+   * Carga la lista de visitantes desde el servicio.
+   */
   cargarVisitantes(): void {
     this.visitantes = this.visitantesService.getVisitantes();
   }
 
-  // Abrir modal para crear
+  /**
+   * Abre el modal para crear un nuevo visitante.
+   */
   abrirModalAgregar() {
     this.editandoVisitante = null;
     this.mostrarModal = true;
   }
 
-  // Abrir modal para editar
+  /**
+   * Abre el modal para editar un visitante existente.
+   * @param id - ID del visitante a editar
+   */
   onEditar(id: number): void {
     const visitante = this.visitantesService.getVisitanteById(id);
     if (visitante) {
@@ -46,7 +58,11 @@ export class VisitantesComponent implements OnInit {
     }
   }
 
-  // Recibir datos desde el modal
+  /**
+   * Procesa los datos enviados desde el modal.
+   * Crea o actualiza el visitante según el contexto.
+   * @param data - Datos del visitante del formulario
+   */
   onGuardarDesdeModal(data: any) {
     if (this.editandoVisitante) {
       // Editar
@@ -63,11 +79,18 @@ export class VisitantesComponent implements OnInit {
     this.cerrarModal();
   }
 
+  /**
+   * Cierra el modal y limpia el estado de edición.
+   */
   cerrarModal() {
     this.mostrarModal = false;
     this.editandoVisitante = null;
   }
 
+  /**
+   * Elimina un visitante tras confirmación del usuario.
+   * @param id - ID del visitante a eliminar
+   */
   onEliminar(id: number): void {
     if (confirm('¿Estás seguro de eliminar este registro?')) {
       this.visitantesService.deleteVisitante(id);

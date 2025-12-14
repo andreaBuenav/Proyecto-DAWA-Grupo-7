@@ -3,6 +3,10 @@ import { Router } from '@angular/router';
 import { CommonModule } from '@angular/common';
 import { AutorizacionService } from '../autorizacion-service';
 
+/**
+ * Componente de la cabecera principal del sistema.
+ * Muestra información del usuario logueado y opciones de sesión.
+ */
 @Component({
   selector: 'app-cabecera',
   imports: [CommonModule],
@@ -23,13 +27,18 @@ export class Cabecera {
     })
   }
 
+  /**
+   * Navega a la página de inicio de sesión.
+   */
   mostrarLogin(){
     this.rutasPaginas.navigate(['/login']);
   }
 
+  /**
+   * Cierra la sesión del usuario actual y redirige al inicio.
+   */
   cerrarSesion(){
     this.autoriza.logeado$.next(false);
     this.rutasPaginas.navigate(['']);
   }
-
 }

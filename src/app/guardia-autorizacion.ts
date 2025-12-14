@@ -1,14 +1,6 @@
 import { Injectable } from '@angular/core';
 import { BehaviorSubject } from 'rxjs';
-
-export interface Guardia {
-  id: number;
-  nombre: string;
-  cedula: string;
-  telefono: string;
-  usuario: string;
-  contrasena: string;
-}
+import { Guardia } from './models/programData';
 
 const GUARDIAS_DATA: Guardia[] = [
   { id: 1, nombre: 'Carlos Jara', cedula: 'Mañana', telefono: '099123456', usuario: 'Activo', contrasena: '123' },

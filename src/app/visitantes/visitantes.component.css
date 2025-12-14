@@ -160,3 +160,109 @@ button {
 .btn-eliminar:hover {
   opacity: 0.85;
 }
+
+/* Media Queries para Responsive */
+@media (max-width: 900px) {
+  .gestion-container {
+    margin: 70px 10px 10px 10px;
+    padding: 15px;
+  }
+
+  h3 {
+    font-size: 1.3rem;
+  }
+
+  .form-visitante {
+    gap: 10px;
+  }
+
+  .form-group {
+    flex: 1 1 100%;
+  }
+
+  .botones-accion {
+    text-align: center;
+  }
+
+  button {
+    padding: 8px 16px;
+    font-size: 0.9rem;
+  }
+
+  .tabla-visitantes {
+    display: block;
+    overflow-x: auto;
+    -webkit-overflow-scrolling: touch;
+  }
+
+  .tabla-visitantes table {
+    font-size: 0.8rem;
+  }
+
+  .tabla-visitantes th,
+  .tabla-visitantes td {
+    padding: 8px 5px;
+    white-space: nowrap;
+  }
+}
+
+@media (max-width: 480px) {
+  .gestion-container {
+    margin: 60px 5px 10px 5px;
+    padding: 12px;
+  }
+
+  h3 {
+    font-size: 1.1rem;
+    margin-top: 10px;
+    margin-bottom: 15px;
+  }
+
+  .btn-guardar {
+    width: 100%;
+    padding: 12px 15px;
+    font-size: 0.95rem;
+    margin-bottom: 8px;
+  }
+
+  .form-group label {
+    font-size: 0.9rem;
+  }
+
+  .form-group input {
+    padding: 10px 12px;
+    font-size: 0.9rem;
+  }
+
+  button {
+    padding: 8px 12px;
+    font-size: 0.85rem;
+  }
+
+  .botones-accion {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+  }
+
+  .tabla-visitantes {
+    display: block;
+    overflow-x: auto;
+    -webkit-overflow-scrolling: touch;
+    font-size: 0.8rem;
+  }
+
+  .tabla-visitantes th,
+  .tabla-visitantes td {
+    padding: 10px 6px;
+    white-space: nowrap;
+    font-size: 0.8rem;
+  }
+
+  .btn-editar,
+  .btn-eliminar {
+    padding: 6px 10px;
+    font-size: 0.8rem;
+    margin: 2px;
+  }
+}

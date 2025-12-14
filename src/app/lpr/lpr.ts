@@ -31,6 +31,10 @@ export class Lpr {
     { placa: 'PBC2456', dueno: 'Carlos Ruiz', acceso: true }
   ];
 
+  /**
+   * Carga una imagen desde un input file y genera una vista previa.
+   * @param event - Evento del input file que contiene la imagen seleccionada
+   */
   cargarImagen(event: any) {
     this.imagen = event.target.files[0];
 
@@ -43,7 +47,12 @@ export class Lpr {
     reader.readAsDataURL(this.imagen);
   }
 
-  
+  /**
+   * Registra automáticamente un acceso en el sistema.
+   * Crea un registro con la información de la placa detectada y la persona asociada.
+   * El acceso se marca como permitido o denegado según si el vehículo está registrado.
+   * @private
+   */
   private registrarAutomatico() {
   const fecha = new Date();
   const registro = {
@@ -58,6 +67,19 @@ export class Lpr {
   this.accesosSrv.registrarAcceso(registro);
 }
 
+/**
+ * Procesa la imagen cargada para reconocer la placa del vehículo mediante OCR.
+ * Busca el vehículo en la base de datos de residentes y visitantes.
+ * Registra automáticamente el acceso según el resultado de la búsqueda.
+ * 
+ * @async
+ * @returns {Promise<void>} - Promesa que se resuelve cuando el procesamiento termina
+ * 
+ * @remarks
+ * - Utiliza Tesseract.js para el reconocimiento óptico de caracteres (OCR)
+ * - Busca primero en residentes, luego en visitantes
+ * - Si no encuentra coincidencia, registra como acceso denegado
+ */
 async procesar() {
   if (!this.imagen) return;
 

@@ -79,3 +79,85 @@ tr.mat-row:hover {
   border-radius: 8px;
   padding: 6px 12px;
 }
+
+/* Media Queries para Responsive */
+@media (max-width: 900px) {
+  :host {
+    margin-top: 70px;
+    padding: 15px 10px;
+  }
+
+  h2 {
+    font-size: 1.3rem;
+    text-align: center;
+  }
+
+  .top-bar {
+    flex-direction: column;
+    gap: 10px;
+    align-items: stretch;
+  }
+
+  .filter-box {
+    max-width: 100%;
+  }
+
+  .buscador {
+    width: 100%;
+  }
+
+  table {
+    font-size: 0.85rem;
+    display: block;
+    overflow-x: auto;
+    -webkit-overflow-scrolling: touch;
+  }
+
+  th.mat-header-cell {
+    padding: 10px 5px;
+    font-size: 0.85rem;
+  }
+
+  td.mat-cell {
+    padding: 8px 5px;
+    font-size: 0.8rem;
+  }
+
+  .btn-primary,
+  .btn-danger {
+    padding: 5px 10px;
+    font-size: 0.85rem;
+  }
+}
+
+@media (max-width: 480px) {
+  :host {
+    margin-top: 60px;
+    padding: 10px 5px;
+  }
+
+  h2 {
+    font-size: 1.1rem;
+  }
+
+  table {
+    font-size: 0.75rem;
+  }
+
+  th.mat-header-cell {
+    padding: 8px 3px;
+    font-size: 0.75rem;
+    white-space: nowrap;
+  }
+
+  td.mat-cell {
+    padding: 6px 3px;
+    font-size: 0.7rem;
+  }
+
+  .btn-primary,
+  .btn-danger {
+    padding: 4px 8px;
+    font-size: 0.75rem;
+  }
+}

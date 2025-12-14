@@ -18,6 +18,10 @@ interface RegistroPanel {
   horaSalida?: string;
 }
 
+/**
+ * Componente para el panel de control de accesos.
+ * Muestra los registros de entrada/salida y permite gestionar las horas de salida.
+ */
 @Component({
   selector: 'panel-control',
   imports: [MatTableModule, CommonModule, MatButtonModule, FormsModule],
@@ -50,6 +54,10 @@ export class PanelControl implements OnInit {
     });
   }
 
+  /**
+   * Carga los registros de acceso desde el servicio y los convierte al formato del panel.
+   * Actualiza el BehaviorSubject con los datos convertidos.
+   */
   cargarRegistros() {
   const data: RegistroAcceso[] = this.accesoSrv.getAccesos();
 
@@ -67,7 +75,10 @@ export class PanelControl implements OnInit {
   this.registrosSubject.next(convertidos);
 }
 
-
+  /**
+   * Obtiene los registros filtrados según el texto de búsqueda.
+   * @returns Array de registros que coinciden con el filtro
+   */
   get registrosFiltrados(): RegistroPanel[] {
     if (!this.filtro) return this.registros;
 
@@ -83,6 +94,11 @@ export class PanelControl implements OnInit {
     );
   }
 
+  /**
+   * Registra la hora de salida de un vehículo.
+   * Actualiza el registro en memoria y en localStorage.
+   * @param index - Índice del registro en el array de registros
+   */
   ingresarHoraSalida(index: number) {
     const hora = new Date().toLocaleTimeString();
     this.registros[index].horaSalida = hora;
