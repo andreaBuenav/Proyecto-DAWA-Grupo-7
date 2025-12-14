@@ -99,7 +99,11 @@ Para instalar estas dependencias:
 ```bash
 npm install jspdf jspdf-autotable xlsx --save
 ```
+O:
 
+```bash
+npm ci
+```
 ### Uso
 
 Estas librerías se usan en el módulo de auditoría (`admin-audit`) para exportar reportes de acceso a formatos PDF y Excel:
