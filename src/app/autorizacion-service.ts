@@ -47,7 +47,13 @@ export class AutorizacionService {
   // Guarda el rol del usuario logeado
   public rolUsuario$ = new BehaviorSubject<string>('');
 
-  // Método para autenticar usuario
+  /**
+   * Autentica un usuario en el sistema.
+   * Verifica las credenciales y actualiza el estado de sesión si son válidas.
+   * @param username - Nombre de usuario
+   * @param password - Contraseña del usuario
+   * @returns true si la autenticación fue exitosa, false en caso contrario
+   */
   autenticar(username: string, password: string): boolean {
     const usuario = this.usuarios.find(
       u => u.user === username && u.password === password
@@ -63,7 +69,11 @@ export class AutorizacionService {
     return false;
   }
 
-  // Método para verificar si el usuario tiene permiso
+  /**
+   * Verifica si el usuario actual tiene permiso para acceder a un módulo específico.
+   * @param modulo - Nombre del módulo a verificar (ej: 'guardias', 'residentes', 'audit')
+   * @returns true si el usuario tiene permiso, false en caso contrario
+   */
   tienePermiso(modulo: string): boolean {
     if (!this.usuarioActual) return false;
 
@@ -76,22 +86,18 @@ export class AutorizacionService {
     return permisos[this.usuarioActual.rol]?.includes(modulo) || false;
   }
 
-  // Método para obtener el rol actual
   obtenerRol(): string {
     return this.usuarioActual?.rol || '';
   }
 
-  // Método para obtener el nombre de usuario
   obtenerNombreUsuario(): string {
     return this.usuarioActual?.nombreUsuario || '';
   }
 
-  // Método para verificar si está logueado
   estaLogueado(): boolean {
     return this.logeado$.value;
   }
 
-  // Método para cerrar sesión
   cerrarSesion(): void {
     this.usuarioActual = null;
     this.logeado$.next(false);

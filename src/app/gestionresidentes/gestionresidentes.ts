@@ -8,6 +8,10 @@ import { ResidentesService } from '../residentes-service';
 import { ConsultaResidente } from '../consulta-residente/consulta-residente';
 import { MatDialog } from '@angular/material/dialog';
 
+/**
+ * Componente para la gestión de residentes.
+ * Permite crear, editar, eliminar y filtrar residentes del sistema.
+ */
 @Component({
   selector: 'app-gestionresidentes',
   standalone: true,
@@ -35,16 +39,28 @@ export class Gestionresidentes implements OnInit {
     });
   }
 
+  /**
+   * Filtra los residentes en la tabla según el texto ingresado.
+   * @param event - Evento del input de búsqueda
+   */
   filtrar(event: any) {
     const valor = event.target.value.trim().toLowerCase();
     this.dataSource.filter = valor;
   }
 
+  /**
+   * Abre el modal de edición para un residente existente.
+   * @param row - Datos del residente a editar
+   */
   editar(row: any) {
     this.residentesSrv.residenteSeleccionado$.next(row);
     this.dialog.open(ConsultaResidente, { width: '800px', height: '800px' });
   }
 
+  /**
+   * Elimina un residente del sistema.
+   * @param row - Datos del residente a eliminar
+   */
   eliminar(row: any) {
     const index = this.datosTabla.findIndex((g: any) => g.id === row.id);
     this.datosTabla.splice(index, 1);
@@ -52,6 +68,10 @@ export class Gestionresidentes implements OnInit {
     this.residentesSrv.guardarEnLocalStorage();
   }
 
+  /**
+   * Abre el modal para crear un nuevo residente.
+   * Genera automáticamente un ID único.
+   */
   nuevoResidente() {
     const nuevo = {
       id: this.generarId(),
@@ -71,6 +91,10 @@ export class Gestionresidentes implements OnInit {
     });
   }
 
+  /**
+   * Genera un ID único para un nuevo residente.
+   * @returns El siguiente ID disponible
+   */
   generarId() {
     const tabla = this.residentesSrv.tablaResidentes$.value;
     if (tabla.length === 0) return 1;

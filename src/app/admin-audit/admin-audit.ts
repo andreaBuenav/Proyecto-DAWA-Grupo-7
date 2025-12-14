@@ -104,10 +104,18 @@ export class AdminAudit implements OnInit {
     this.dataSource.filter = JSON.stringify(filterObject);
   }
 
+  /**
+   * Cambia la pestaña activa en la interfaz.
+   * @param pestana - Nombre de la pestaña a activar
+   */
   cambiarPestana(pestana: string) {
     this.pestanaActiva = pestana;
   }
 
+  /**
+   * Exporta los datos filtrados de la tabla a un archivo PDF.
+   * Genera un documento con el reporte de auditoría de accesos.
+   */
   exportarPDF() {
     const doc = new jsPDF();
     
@@ -141,6 +149,10 @@ export class AdminAudit implements OnInit {
     doc.save(`auditoria_${new Date().getTime()}.pdf`);
   }
 
+  /**
+   * Exporta los datos filtrados de la tabla a un archivo Excel.
+   * Genera una hoja de cálculo con el reporte de auditoría de accesos.
+   */
   exportarExcel() {
     const datos = this.dataSource.filteredData;
     

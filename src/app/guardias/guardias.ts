@@ -9,6 +9,10 @@ import { ConsultaGuardia } from '../consulta-guardia/consulta-guardia';
 import { MatIconModule } from '@angular/material/icon';
 
 
+/**
+ * Componente para la gestión de guardias de seguridad.
+ * Permite operaciones CRUD sobre guardias y asignación de turnos.
+ */
 @Component({
   selector: 'app-guardias',
   imports: [MatTableModule, CommonModule, MatButtonModule, MatIconModule],
@@ -46,22 +50,38 @@ export class GuardiasComponent implements OnInit {
     });
   }
 
+  /**
+   * Filtra la tabla de guardias según el texto ingresado.
+   * @param event - Evento del input de búsqueda
+   */
   filtrar(event: any) {
     const valor = event.target.value.trim().toLowerCase();
     this.dataSource.filter = valor;
   }  
 
+  /**
+   * Abre el modal de edición para un guardia existente.
+   * @param row - Datos del guardia a editar
+   */
   editar(row: any) {
     this.guardiasSrv.guardiaSeleccionado$.next(row);
     this.dialog.open(ConsultaGuardia, { width: '340px' });
   }
 
+  /**
+   * Elimina un guardia del sistema.
+   * @param row - Datos del guardia a eliminar
+   */
   eliminar(row: any) {
     const index = this.datosTabla.findIndex((g: any) => g.id === row.id);
     this.datosTabla.splice(index, 1);
     this.guardiasSrv.tablaGuardias$.next(this.datosTabla);
   }
 
+  /**
+   * Abre el modal para crear un nuevo guardia.
+   * Inicializa con valores por defecto y genera un ID único.
+   */
   nuevoGuardia() {
   const nuevo = {
     id: this.generarId(),
@@ -81,6 +101,10 @@ export class GuardiasComponent implements OnInit {
   });
 }
 
+/**
+ * Genera un ID único para un nuevo guardia.
+ * @returns El siguiente ID disponible basado en el máximo existente
+ */
 generarId() {
   const tabla = this.guardiasSrv.tablaGuardias$.value;
   if (tabla.length === 0) return 1;
