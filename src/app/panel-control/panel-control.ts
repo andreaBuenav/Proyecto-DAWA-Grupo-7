@@ -61,6 +61,7 @@ export class PanelControl implements OnInit {
     registrado: (reg.acceso ? 'Sí' : 'No') as 'Sí' | 'No',
     fechaEntrada: reg.fecha,
     horaEntrada: reg.hora,
+      horaSalida: reg.horaSalida
   }));
 
   this.registrosSubject.next(convertidos);
@@ -93,6 +94,7 @@ export class PanelControl implements OnInit {
       localStorage.setItem('accesos', JSON.stringify(almacenados));
     }
 
+    // Refrescar los registros en la vista
     this.cargarRegistros();
   }
 }

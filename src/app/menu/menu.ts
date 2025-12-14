@@ -42,10 +42,6 @@ export class Menu {
     this.rutasPaginas.navigate(['/app/panel-control']);
   }
 
-    cerrarSesion(){
-    this.autoriza.logeado$.next(false);
-    this.rutasPaginas.navigate(['']);
-  }
 
 
 }

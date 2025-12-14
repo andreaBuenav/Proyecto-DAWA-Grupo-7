@@ -1,0 +1,18 @@
+body {
+
+  background-color: black; 
+  display: flex;            
+  justify-content: center;  
+  align-items: center;      
+    padding-top: 70px;
+}
+
+.fondo-imagen {
+  background-image: url('../../assets/images/LogoProyectoBN.png');
+  background-repeat: no-repeat;
+  background-position: center center; 
+  background-size: contain;              /* Mantiene tamaño original */
+  width: 800px;   
+  height: 600px; 
+
+}
