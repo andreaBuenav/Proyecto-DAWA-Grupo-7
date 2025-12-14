@@ -18,23 +18,13 @@ export class Login {
   constructor(private rutasPaginas:Router, private autoriza:AutorizacionService) {}
 
   onAccept() {
-    const userCorrecto = this.autoriza.usuarioSistema.user;
-  const passCorrecto = this.autoriza.usuarioSistema.password;
-
-  if (this.user === userCorrecto && this.password === passCorrecto) {
-
-    alert('Acceso concedido');
-
-    // Actualiza el estado global
-    this.autoriza.logeado$.next(true);
-    this.autoriza.usuarioLogeado$.next(this.autoriza.usuarioSistema.nombreUsuario);
-
-    // Redirige al principal
-    this.rutasPaginas.navigate(['/principal']);
-
-  } else {
-    alert('Error en credenciales');
-  }
+    if (this.autoriza.autenticar(this.user, this.password)) {
+      alert('Acceso concedido');
+      // Redirige al principal
+      this.rutasPaginas.navigate(['/principal']);
+    } else {
+      alert('Error en credenciales');
+    }
   }
 
 

@@ -1,59 +1,112 @@
-# LoginProject
+# Sistema de Control de Acceso Vehicular (SCAI-VEH)
 
-This project was generated using [Angular CLI](https://github.com/angular/angular-cli) version 20.3.8.
+Este proyecto fue generado usando [Angular CLI](https://github.com/angular/angular-cli) versión 20.3.8.
 
-## Development server
+## Servidor de Desarrollo
 
-To start a local development server, run:
+Para iniciar un servidor de desarrollo local, ejecuta:
 
 ```bash
 ng serve
 ```
 
-Once the server is running, open your browser and navigate to `http://localhost:4200/`. The application will automatically reload whenever you modify any of the source files.
+Una vez que el servidor esté ejecutándose, abre tu navegador y navega a `http://localhost:4200/`. La aplicación se recargará automáticamente cuando modifiques cualquiera de los archivos fuente.
 
-## Code scaffolding
+## Usuarios del Sistema
 
-Angular CLI includes powerful code scaffolding tools. To generate a new component, run:
+El sistema cuenta con 3 tipos de usuarios con diferentes niveles de acceso:
+
+### 👨‍💼 Administrador
+- **Usuario:** `admin`
+- **Contraseña:** `admin123`
+- **Nombre:** Ernesto
+- **Permisos:** Acceso completo a todos los módulos
+  - Gestión de Guardias
+  - Gestión de Residentes
+  - Auditoría
+  - Visitantes
+  - LPR
+  - Panel de Control de Acceso
+
+### 🏠 Residente
+- **Usuario:** `residente`
+- **Contraseña:** `residente123`
+- **Nombre:** María González
+- **Permisos:** Acceso limitado
+  - Visitantes
+
+### 👮 Guardia
+- **Usuario:** `guardia`
+- **Contraseña:** `guardia123`
+- **Nombre:** Carlos Pérez
+- **Permisos:** Acceso a módulos operativos
+  - LPR
+  - Panel de Control de Acceso
+
+## Generación de Código
+
+Angular CLI incluye potentes herramientas de scaffolding. Para generar un nuevo componente, ejecuta:
 
 ```bash
-ng generate component component-name
+ng generate component nombre-componente
 ```
 
-For a complete list of available schematics (such as `components`, `directives`, or `pipes`), run:
+Para una lista completa de esquemas disponibles (como `components`, `directives`, o `pipes`), ejecuta:
 
 ```bash
 ng generate --help
 ```
 
-## Building
+## Construcción
 
-To build the project run:
+Para construir el proyecto ejecuta:
 
 ```bash
 ng build
 ```
 
-This will compile your project and store the build artifacts in the `dist/` directory. By default, the production build optimizes your application for performance and speed.
+Esto compilará tu proyecto y almacenará los artefactos de construcción en el directorio `dist/`. Por defecto, la construcción de producción optimiza tu aplicación para rendimiento y velocidad.
 
-## Running unit tests
+## Ejecutar Pruebas Unitarias
 
-To execute unit tests with the [Karma](https://karma-runner.github.io) test runner, use the following command:
+Para ejecutar las pruebas unitarias con el test runner [Karma](https://karma-runner.github.io), usa el siguiente comando:
 
 ```bash
 ng test
 ```
 
-## Running end-to-end tests
+## Ejecutar Pruebas End-to-End
 
-For end-to-end (e2e) testing, run:
+Para pruebas end-to-end (e2e), ejecuta:
 
 ```bash
 ng e2e
 ```
 
-Angular CLI does not come with an end-to-end testing framework by default. You can choose one that suits your needs.
+Angular CLI no viene con un framework de pruebas end-to-end por defecto. Puedes elegir uno que se adapte a tus necesidades.
 
-## Additional Resources
+## Dependencias
 
-For more information on using the Angular CLI, including detailed command references, visit the [Angular CLI Overview and Command Reference](https://angular.dev/tools/cli) page.
+Este proyecto usa las siguientes librerías npm:
+
+### Librerías de Exportación
+- **jspdf** (^2.5.2): Librería para generar documentos PDF
+- **jspdf-autotable** (^3.8.4): Plugin para jsPDF para generar tablas en PDF
+- **xlsx** (^0.18.5): Librería para leer y escribir archivos Excel
+
+Para instalar estas dependencias:
+
+```bash
+npm install jspdf jspdf-autotable xlsx --save
+```
+
+### Uso
+
+Estas librerías se usan en el módulo de auditoría (`admin-audit`) para exportar reportes de acceso a formatos PDF y Excel:
+
+- **Exportar a PDF**: Genera un PDF formateado con una tabla de registros de acceso
+- **Exportar a Excel**: Crea una hoja de cálculo Excel con columnas ajustables y datos de acceso
+
+## Recursos Adicionales
+
+Para más información sobre el uso de Angular CLI, incluyendo referencias detalladas de comandos, visita la página [Angular CLI Overview and Command Reference](https://angular.dev/tools/cli).

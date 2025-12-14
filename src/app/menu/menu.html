@@ -1,46 +1,61 @@
-<nav class="menu-lateral">
-  <div class="menu-header">
-    <i class="fa-solid fa-user-shield avatar"></i>
-    <h3 class="username">Bienvenido</h3>
-  </div>
+<div class="menu-wrapper">
+  <!-- Botón hamburguesa -->
+  <button *ngIf="isMobile && !menuOpen" class="hamburger-btn" (click)="toggleMenu()">
+    <span></span>
+    <span></span>
+    <span></span>
+  </button>
 
-  <ul class="menu-items">
+  <!-- Overlay -->
+  <div *ngIf="isMobile && menuOpen" class="menu-overlay" (click)="closeMenu()"></div>
 
-    <li class="menu-item" (click)="mostrarPrincipalModulos()">
-      <i class="fa-solid fa-house icon"></i>
-      <span>Home</span>
-    </li>
+  <!-- Menú lateral deslizable -->
+  <nav class="menu-lateral" [class.menu-open]="menuOpen || !isMobile">
+    <!-- Botón cerrar para móviles -->
+    <button *ngIf="isMobile" class="close-btn" (click)="closeMenu()">
+      <i class="fa-solid fa-times"></i>
+    </button>
+    
+    <div class="menu-header">
+      <i class="fa-solid fa-user-shield avatar"></i>
+      <h3 class="username">Bienvenido</h3>
+    </div>
 
-    <li class="menu-item" (click)="mostrarGuardias()">
-      <i class="fas fa-shield-alt icon"></i>
-      <span>Gestión de Guardias</span>
-    </li>
+    <ul class="menu-items">
+      <li class="menu-item" (click)="mostrarPrincipalModulos()">
+        <i class="fa-solid fa-house icon"></i>
+        <span>Home</span>
+      </li>
 
-    <li class="menu-item" (click)="mostrarResidentes()">
-      <i class="fa-solid fa-people-roof icon"></i>
-      <span>Gestión de Residentes</span>
-    </li>
+      <li *ngIf="puedeVerGuardias()" class="menu-item" (click)="mostrarGuardias()">
+        <i class="fas fa-shield-alt icon"></i>
+        <span>Gestión de Guardias</span>
+      </li>
 
-    <li class="menu-item" (click)="mostrarAudit()">
-      <i class="fas fa-chart-line icon"></i>
-      <span>Auditoría</span>
-    </li>
+      <li *ngIf="puedeVerResidentes()" class="menu-item" (click)="mostrarResidentes()">
+        <i class="fa-solid fa-people-roof icon"></i>
+        <span>Gestión de Residentes</span>
+      </li>
 
-    <li class="menu-item" (click)="mostrarVisitantes()">
-      <i class="fa-solid fa-address-card icon"></i>
-      <span>Visitantes</span>
-    </li>
+      <li *ngIf="puedeVerAudit()" class="menu-item" (click)="mostrarAudit()">
+        <i class="fas fa-chart-line icon"></i>
+        <span>Auditoría</span>
+      </li>
 
-    <li class="menu-item" (click)="mostrarLpr()">
-      <i class="fa-solid fa-users-viewfinder icon"></i>
-      <span>LPR</span>
-    </li>
+      <li *ngIf="puedeVerVisitantes()" class="menu-item" (click)="mostrarVisitantes()">
+        <i class="fa-solid fa-address-card icon"></i>
+        <span>Visitantes</span>
+      </li>
 
-    <li class="menu-item" (click)="mostrarPanelControl()">
-      <i class="fa-solid fa-chalkboard-user icon"></i>
-      <span>Panel de Control de Acceso</span>
-    </li>
+      <li *ngIf="puedeVerLpr()" class="menu-item" (click)="mostrarLpr()">
+        <i class="fa-solid fa-users-viewfinder icon"></i>
+        <span>LPR</span>
+      </li>
 
-  </ul>
- 
-</nav>
+      <li *ngIf="puedeVerPanelControl()" class="menu-item" (click)="mostrarPanelControl()">
+        <i class="fa-solid fa-chalkboard-user icon"></i>
+        <span>Panel de Control de Acceso</span>
+      </li>
+    </ul>
+  </nav>
+</div>
