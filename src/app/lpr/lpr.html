@@ -19,7 +19,7 @@
         <p><strong>Placa detectada:</strong> {{ placa }}</p>
 
         <ng-container *ngIf="infoVehiculo; else noMatch">
-            <p><strong>Dueño:</strong> {{ infoVehiculo.dueno }}</p>
+            <p><strong>Dueño:</strong> {{ infoVehiculo.persona }}</p>
 
             <div class="access-indicator" [ngClass]="infoVehiculo.acceso ? 'allowed' : 'denied'">
             {{ infoVehiculo.acceso ? 'ACCESO PERMITIDO' : 'ACCESO DENEGADO' }}

@@ -37,16 +37,14 @@ const RESIDENTES_DATA: Residente[] = [
 })
 export class ResidentesService {
 
-  /** Observable del residente actualmente seleccionado */
   residenteSeleccionado$ = new BehaviorSubject<any>({});
   
-  /** Observable con la lista completa de residentes */
-  tablaResidentes$ = new BehaviorSubject<any>(RESIDENTES_DATA);
+  // Tabla para Residentes
+  tablaResidentes$ = new BehaviorSubject<any[]>(RESIDENTES_DATA);
+  
+  // NUEVO: Tabla para Vehículos
+  tablaVehiculos$ = new BehaviorSubject<any[]>([]); 
 
-  /**
-   * Constructor del servicio.
-   * Carga los residentes desde localStorage si existen, o usa los datos por defecto.
-   */
   constructor() {
     const data = localStorage.getItem('residentes');
     if (data) {
@@ -54,10 +52,6 @@ export class ResidentesService {
     }
   }
 
-  /**
-   * Guarda la lista actual de residentes en localStorage.
-   * Utilizado para persistir los cambios realizados en la gestión de residentes.
-   */
   public guardarEnLocalStorage() {
     localStorage.setItem('residentes', JSON.stringify(this.tablaResidentes$.value));
   }

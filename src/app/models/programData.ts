@@ -1,5 +1,6 @@
 export interface Visitante {
   id: number;
+  id_residente?: number; 
   nombreCompleto: string;
   identificacion: string;
   placaVehiculo: string;

@@ -1,32 +1,42 @@
 import { Injectable } from '@angular/core';
 import { BehaviorSubject } from 'rxjs';
-import { Guardia } from './models/programData';
+import { GuardiaService } from '../app/guardia.service';
 
-const GUARDIAS_DATA: Guardia[] = [
-  { id: 1, nombre: 'Carlos Jara', cedula: 'Mañana', telefono: '099123456', usuario: 'Activo', contrasena: '123' },
-  { id: 2, nombre: 'Luis Paredes', cedula: 'Tarde', telefono: '098765432', usuario: 'Activo', contrasena: '123' },
-  { id: 3, nombre: 'Jose Torres', cedula: 'Noche', telefono: '097654321', usuario: 'Suspendido', contrasena: '123' },
-  { id: 4, nombre: 'Eduardo Medina', cedula: 'Mañana', telefono: '096112233', usuario: 'Activo', contrasena: '123' },
-];
-
-@Injectable({
-  providedIn: 'root'
-})
+@Injectable({ providedIn: 'root' })
 export class GuardiasService {
 
-  guardiaSeleccionado$ = new BehaviorSubject<any>({});
-  tablaGuardias$ = new BehaviorSubject<any>(GUARDIAS_DATA);
+  tablaGuardias$ = new BehaviorSubject<any[]>([]);
+  guardiaSeleccionado$ = new BehaviorSubject<any>(null);
 
-  public guardarEnLocalStorage() {
-    localStorage.setItem('guardias', JSON.stringify(this.tablaGuardias$.value));
+  constructor(private api: GuardiaService) {}
+
+  // =========================
+  // |  CONSULTAR
+  // =========================
+  cargarGuardias() {
+    const body = { Transaccion: 'CONSULTAR_GUARDIAS' };
+    this.api.getGuardia(body).subscribe({
+      next: (data: any[]) => this.tablaGuardias$.next(data),
+      error: err => console.error(err)
+    });
   }
 
-  constructor() {
-    const data = localStorage.getItem('guardias');
-    if (data) {
-      this.tablaGuardias$.next(JSON.parse(data));
-    } else {
-      this.tablaGuardias$.next(GUARDIAS_DATA);
-    }
+  // =========================
+  // INSERTAR / MODIFICAR
+  // =========================
+  guardarGuardia(guardia: any, esNuevo: boolean) {
+    guardia.Transaccion = esNuevo ? 'INSERTAR_GUARDIA' : 'MODIFICAR_GUARDIA';
+    return this.api.updateGuardia(guardia);
+  }
+
+  // =========================
+  // ELIMINAR
+  // =========================
+  eliminarGuardia(id: number) {
+    const body = {
+      Transaccion: 'ELIMINAR_GUARDIA',
+      Id: id
+    };
+    return this.api.updateGuardia(body);
   }
 }
