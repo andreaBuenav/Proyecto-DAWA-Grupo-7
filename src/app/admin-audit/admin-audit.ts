@@ -8,8 +8,7 @@ import { FormsModule } from '@angular/forms';
 import jsPDF from 'jspdf';
 import autoTable from 'jspdf-autotable';
 import * as XLSX from 'xlsx';
-import { AccesoService, RegistroAcceso } from '../acceso-service'; 
-
+import { AuditoriaService } from '../auditoria.service';
 
 interface Movimiento {
   id: number;
@@ -18,7 +17,6 @@ interface Movimiento {
   horaSalida: string;
   tipoUsuario: 'Residente' | 'Visitante' | 'No Registrado';
   persona: string;
-  estado: string;
 }
 
 @Component({
@@ -47,7 +45,7 @@ export class AdminAudit implements OnInit {
 
   pestanaActiva: string = 'Auditoría';
 
-  constructor(private accesoSrv: AccesoService) {}
+  constructor(private auditoriaSrv: AuditoriaService) {}
 
   ngOnInit(): void {
     this.cargarDatos();
@@ -59,26 +57,29 @@ export class AdminAudit implements OnInit {
   }
 
   cargarDatos(): void {
-    const registros: RegistroAcceso[] = this.accesoSrv.getAccesos();
-    
-    // Convertir RegistroAcceso a Movimiento
-    this.datosTabla = registros.map((reg, index) => {
-      const entrada = new Date(`${reg.fecha} ${reg.hora}`);
-      const salida = reg.horaSalida ? new Date(`${reg.fecha} ${reg.horaSalida}`) : null;
-      return {
+  this.auditoriaSrv.getAuditoria('AUDITORIA_TODOS').subscribe({
+    next: (data) => {
+
+
+      this.datosTabla = data.map((reg, index) => ({
         id: index + 1,
         placa: reg.placa,
-        horaAcceso: `${reg.fecha} ${reg.hora}`,
-        horaSalida: reg.horaSalida ? `${reg.fecha} ${reg.horaSalida}` : 'En curso',
-        tipoUsuario: reg.tipo,
-        persona: reg.persona || 'Desconocido',
-        estado: reg.acceso ? 'ACEPTADO' : 'DENEGADO'
-      };
-    });
-    
-    this.dataSource = new MatTableDataSource<Movimiento>(this.datosTabla);
-    this.dataSource.filterPredicate = this.customFilterPredicate;
-  }
+        persona: reg.persona ?? 'Desconocido',
+        tipoUsuario: reg.tipo as any,
+        horaAcceso: reg.fecha
+          ? new Date(reg.fecha).toLocaleString()
+          : '',
+        horaSalida: reg.horaSalida
+          ? new Date(reg.horaSalida).toLocaleTimeString()
+          : 'En curso'
+      }));
+
+      this.dataSource = new MatTableDataSource(this.datosTabla);
+      this.dataSource.filterPredicate = this.customFilterPredicate;
+    },
+    error: err => alert('Error al cargar auditoría: ' + err.message)
+  });
+}
 
   // Predicado para filtros combinados (Placa + Selects)
   customFilterPredicate = (data: Movimiento, filter: string): boolean => {
@@ -96,14 +97,41 @@ export class AdminAudit implements OnInit {
   }
 
   // Se llama en (keyup) del input y (selectionChange) de los selects
-  aplicarFiltros() {
-    const filterObject = {
-      placa: this.busquedaPlaca,
-      tipoUsuario: this.tipoUsuarioFiltro,
-    };
-    this.dataSource.filter = JSON.stringify(filterObject);
+ aplicarFiltros() {
+
+  if (this.tipoUsuarioFiltro === 'Residente') {
+    this.auditoriaSrv.getAuditoria('AUDITORIA_RESIDENTES').subscribe(d => this.mapear(d));
+    return;
   }
 
+  if (this.tipoUsuarioFiltro === 'Visitante') {
+    this.auditoriaSrv.getAuditoria('AUDITORIA_VISITANTES').subscribe(d => this.mapear(d));
+    return;
+  }
+
+  if (this.busquedaPlaca) {
+    this.auditoriaSrv.getAuditoria('BUSCAR_POR_PLACA', this.busquedaPlaca)
+      .subscribe(d => this.mapear(d));
+    return;
+  }
+
+  this.cargarDatos();
+}
+
+private mapear(data: any[]) {
+  this.datosTabla = data.map((reg, index) => ({
+    id: index + 1,
+    placa: reg.placa,
+    persona: reg.persona ?? 'Desconocido',
+    tipoUsuario: reg.tipo,
+    horaAcceso: new Date(reg.fecha).toLocaleString(),
+    horaSalida: reg.horaSalida
+      ? new Date(reg.horaSalida).toLocaleTimeString()
+      : 'En curso'
+  }));
+
+  this.dataSource.data = this.datosTabla;
+}
   /**
    * Cambia la pestaña activa en la interfaz.
    * @param pestana - Nombre de la pestaña a activar

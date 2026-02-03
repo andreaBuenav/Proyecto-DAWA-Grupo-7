@@ -7,6 +7,8 @@ import { MatIconModule } from '@angular/material/icon';
 import { ResidentesService } from '../residentes-service';
 import { ConsultaResidente } from '../consulta-residente/consulta-residente';
 import { MatDialog } from '@angular/material/dialog';
+import { FormControl, FormGroup } from '@angular/forms';
+import { ResidenteService } from '../residente.service';
 
 /**
  * Componente para la gestión de residentes.
@@ -30,14 +32,55 @@ export class Gestionresidentes implements OnInit {
 
   dialog = inject(MatDialog);
 
-  constructor(private residentesSrv: ResidentesService) {}
+  residentes = new FormGroup({
+    Transaccion: new FormControl(),
+  });
 
-  ngOnInit(): void {
-    this.residentesSrv.tablaResidentes$.subscribe(data => {
-      this.datosTabla = data;
-      this.dataSource = new MatTableDataSource<any>(data);
-    });
+  constructor(
+      private residenteService: ResidenteService,
+      private residentesSrv: ResidentesService,
+    ) {}
+  
+  vehiculos: any[] = [];
+
+ngOnInit(): void {
+  this.residentesSrv.tablaResidentes$.subscribe(data => {
+    this.datosTabla = data;
+    this.dataSource = new MatTableDataSource<any>(data);
+  });
+
+  this.residentesSrv.tablaVehiculos$.subscribe(data => {
+    this.vehiculos = data;
+  });
+
+  this.obtenerResidentes();
   }
+
+  obtenerResidentes() {
+  this.residentes.value.Transaccion = 'CONSULTAR_RESIDENTES';
+  this.residenteService.getResidente(this.residentes.value).subscribe({
+    next: (data: any) => {
+      // 1. Enviamos los residentes a su Subject
+      if (data.residentes) {
+
+      const residentesMapeados = data.residentes.map((r: any) => ({
+        ...r,
+        contrasena: r['contraseña']
+      }));
+
+      this.residentesSrv.tablaResidentes$.next(residentesMapeados);
+    }
+
+      // 2. Enviamos los vehículos a su propio Subject
+      if (data.vehiculos) {
+        this.residentesSrv.tablaVehiculos$.next(data.vehiculos);
+      }
+    },
+    error: (err) => {
+      console.error('Error API:', err);
+    },
+  });
+}
 
   /**
    * Filtra los residentes en la tabla según el texto ingresado.
@@ -52,21 +95,55 @@ export class Gestionresidentes implements OnInit {
    * Abre el modal de edición para un residente existente.
    * @param row - Datos del residente a editar
    */
-  editar(row: any) {
-    this.residentesSrv.residenteSeleccionado$.next(row);
-    this.dialog.open(ConsultaResidente, { width: '800px', height: '800px' });
-  }
+ editar(row: any) {
+
+  // 1 Tomamos todos los vehículos
+  const vehiculos = this.residentesSrv.tablaVehiculos$.value || [];
+
+  // 2 Filtramos solo los del residente
+  const vehiculosDelResidente = vehiculos.filter(
+    (v: any) => v.dueno === row.nombre
+  );
+
+  // 3 Creamos un objeto COMPLETO
+  const residenteCompleto = {
+    ...row,
+    vehiculos: vehiculosDelResidente
+  };
+
+  // 4 Lo enviamos al modal
+  this.residentesSrv.residenteSeleccionado$.next(residenteCompleto);
+
+  this.dialog.open(ConsultaResidente, {
+    width: '800px',
+    height: '800px'
+  });
+}
 
   /**
    * Elimina un residente del sistema.
    * @param row - Datos del residente a eliminar
    */
   eliminar(row: any) {
-    const index = this.datosTabla.findIndex((g: any) => g.id === row.id);
-    this.datosTabla.splice(index, 1);
-    this.residentesSrv.tablaResidentes$.next(this.datosTabla);
-    this.residentesSrv.guardarEnLocalStorage();
+  if (confirm(`¿Está seguro de eliminar al residente ${row.nombre}?`)) {
+    const payload = {
+      Id: row.id,
+      Transaccion: 'ELIMINAR_RESIDENTE'
+    };
+
+    this.residenteService.updateResidente(payload).subscribe({
+      next: (res: any) => {
+        if (res.respuesta === 'OK') {
+          // Refrescamos la lista completa desde el servidor
+          this.obtenerResidentes();
+        } else {
+          alert('Error al eliminar: ' + res.leyenda);
+        }
+      },
+      error: (err) => console.error('Error API:', err)
+    });
   }
+}
 
   /**
    * Abre el modal para crear un nuevo residente.
@@ -74,7 +151,7 @@ export class Gestionresidentes implements OnInit {
    */
   nuevoResidente() {
     const nuevo = {
-      id: this.generarId(),
+      id: null,
       nombre: '',
       cedula: '',
       telefono: '',

@@ -1,7 +1,7 @@
 import { Component } from '@angular/core';
 import { Router } from '@angular/router';
 import { CommonModule } from '@angular/common';
-import { AutorizacionService } from '../autorizacion-service';
+import { AutorizacionService, UsuarioSesion } from '../autorizacion-service';
 
 /**
  * Componente de la cabecera principal del sistema.
@@ -14,31 +14,50 @@ import { AutorizacionService } from '../autorizacion-service';
   styleUrls: ['./cabecera.css'],
 })
 export class Cabecera {
-    logueadoCabecera = false;
-    nombreUsuario = '';
+    logueadoCabecera: boolean = false;
+  nombreUsuario: string = '';
+  rolUsuario: string = '';
 
-    constructor(private rutasPaginas:Router, private autoriza:AutorizacionService) {}
-  
+  constructor(
+    private router: Router,
+    private authService: AutorizacionService
+  ) {}
+
   ngOnInit(): void {
-    this.autoriza.logeado$.subscribe(data => {
-      this.logueadoCabecera = data;
-      console.log(this.logueadoCabecera);
-      this.autoriza.usuarioLogeado$.subscribe(nombre => this.nombreUsuario = nombre);
-    })
+
+    // Escucha si está logueado
+    this.authService.logeado$.subscribe(logueado => {
+      this.logueadoCabecera = logueado;
+    });
+
+    // Escucha datos del usuario
+    this.authService.usuario$.subscribe((usuario: UsuarioSesion | null) => {
+      if (usuario) {
+        this.nombreUsuario =
+          usuario.nombre_guardia ||
+          usuario.nombre_residente ||
+          usuario.usuario;
+
+        this.rolUsuario = usuario.rol;
+      } else {
+        this.nombreUsuario = '';
+        this.rolUsuario = '';
+      }
+    });
   }
 
-  /**
-   * Navega a la página de inicio de sesión.
-   */
-  mostrarLogin(){
-    this.rutasPaginas.navigate(['/login']);
+  // =============================
+  // IR AL LOGIN
+  // =============================
+  mostrarLogin() {
+    this.router.navigate(['/login']);
   }
 
-  /**
-   * Cierra la sesión del usuario actual y redirige al inicio.
-   */
-  cerrarSesion(){
-    this.autoriza.logeado$.next(false);
-    this.rutasPaginas.navigate(['']);
+  // =============================
+  // CERRAR SESIÓN
+  // =============================
+  cerrarSesion() {
+    this.authService.cerrarSesion();
+    this.router.navigate(['/login']);
   }
 }

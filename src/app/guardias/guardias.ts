@@ -2,12 +2,13 @@ import { Component, OnInit, inject } from '@angular/core';
 import { MatTableDataSource } from '@angular/material/table';
 import { MatDialog } from '@angular/material/dialog';
 import { GuardiasService } from '../guardia-autorizacion';
-import { MatTableModule} from '@angular/material/table';
+import { MatTableModule } from '@angular/material/table';
 import { MatButtonModule } from '@angular/material/button';
 import { CommonModule } from '@angular/common';
 import { ConsultaGuardia } from '../consulta-guardia/consulta-guardia';
 import { MatIconModule } from '@angular/material/icon';
-
+import { FormControl, FormGroup } from '@angular/forms';
+import { GuardiaService } from '../guardia.service';
 
 /**
  * Componente para la gestión de guardias de seguridad.
@@ -20,22 +21,37 @@ import { MatIconModule } from '@angular/material/icon';
   styleUrls: ['./guardias.css'],
 })
 export class GuardiasComponent implements OnInit {
-  
-  columnas: string[] = ['id', 'nombre', 'cedula', 'telefono', 'usuario', 'estado', 'contrasena','action'];
+  columnas: string[] = [
+    'id',
+    'nombre',
+    'cedula',
+    'telefono',
+    'usuario',
+    'estado',
+    'contrasena',
+    'action',
+  ];
   dataSource: any = [];
   datosTabla: any = [];
 
   dialog = inject(MatDialog);
 
-  constructor(private guardiasSrv: GuardiasService) {}
+  guardias = new FormGroup({
+    Transaccion: new FormControl(),
+  });
+
+  constructor(
+    private guardiaService: GuardiaService,
+    private guardiasSrv: GuardiasService,
+  ) {}
 
   ngOnInit(): void {
-    this.guardiasSrv.tablaGuardias$.subscribe(data => {
-      // ensure legacy rows have both 'usuario' and 'estado' populated
+    this.guardiasSrv.tablaGuardias$.subscribe((data) => {
       this.datosTabla = (data || []).map((r: any) => ({
         ...r,
-        usuario: r.usuario ?? r.estado ?? '',
-        estado: r.estado ?? r.usuario ?? ''
+        nombre: r.nombres,
+        contrasena: r.contraseña ?? '',
+        estado: r.estado ? 'Activo' : 'Inactivo',
       }));
 
       const mapped = this.datosTabla;
@@ -48,8 +64,21 @@ export class GuardiasComponent implements OnInit {
         this.dataSource = new MatTableDataSource<any>(mapped);
       }
     });
+
+    this.obtenerGuardias();
   }
 
+  obtenerGuardias() {
+    this.guardias.value.Transaccion = 'CONSULTAR_GUARDIAS';
+    this.guardiaService.getGuardia(this.guardias.value).subscribe({
+      next: (data: any) => {
+        this.guardiasSrv.tablaGuardias$.next(data);
+      },
+      error: (err) => {
+        alert('Error al obtener los guardias: ' + err.message);
+      },
+    });
+  }
   /**
    * Filtra la tabla de guardias según el texto ingresado.
    * @param event - Evento del input de búsqueda
@@ -57,57 +86,80 @@ export class GuardiasComponent implements OnInit {
   filtrar(event: any) {
     const valor = event.target.value.trim().toLowerCase();
     this.dataSource.filter = valor;
-  }  
+  }
 
   /**
    * Abre el modal de edición para un guardia existente.
    * @param row - Datos del guardia a editar
    */
-  editar(row: any) {
-    this.guardiasSrv.guardiaSeleccionado$.next(row);
-    this.dialog.open(ConsultaGuardia, { width: '340px' });
-  }
 
+  editar(row: any) {
+  this.guardiasSrv.guardiaSeleccionado$.next(row);
+
+  const dialogRef = this.dialog.open(ConsultaGuardia, {
+    width: '340px',
+  });
+
+  dialogRef.afterClosed().subscribe((actualizo) => {
+    if (actualizo) {
+      this.obtenerGuardias();
+    }
+  });
+
+  
+}
   /**
    * Elimina un guardia del sistema.
    * @param row - Datos del guardia a eliminar
    */
-  eliminar(row: any) {
-    const index = this.datosTabla.findIndex((g: any) => g.id === row.id);
-    this.datosTabla.splice(index, 1);
-    this.guardiasSrv.tablaGuardias$.next(this.datosTabla);
-  }
+
+ eliminar(row: any) {
+  const confirmacion = confirm('¿Está seguro de eliminar este guardia?');
+  if (!confirmacion) return;
+
+  this.guardiasSrv.eliminarGuardia(row.id).subscribe({
+    next: () => this.guardiasSrv.cargarGuardias(),
+    error: err => console.error(err)
+  });
+}
 
   /**
    * Abre el modal para crear un nuevo guardia.
    * Inicializa con valores por defecto y genera un ID único.
    */
+
   nuevoGuardia() {
-  const nuevo = {
-    id: this.generarId(),
-    nombre: '',
-    cedula: '',
-    telefono: '',
-    usuario: '',
-    estado: 'Activo',
-    contrasena: '',
-    
-  };
+    const nuevo = {
+      id: this.generarId(),
+      nombre: '',
+      cedula: '',
+      telefono: '',
+      usuario: '',
+      estado: 'Activo',
+      contrasena: '',
+    };
 
-  this.guardiasSrv.guardiaSeleccionado$.next(nuevo);
+    this.guardiasSrv.guardiaSeleccionado$.next(nuevo);
 
-  this.dialog.open(ConsultaGuardia, {
-    width: '340px'
+   const dialogRef = this.dialog.open(ConsultaGuardia, {
+    width: '340px',
   });
-}
 
-/**
- * Genera un ID único para un nuevo guardia.
- * @returns El siguiente ID disponible basado en el máximo existente
- */
-generarId() {
-  const tabla = this.guardiasSrv.tablaGuardias$.value;
-  if (tabla.length === 0) return 1;
-  return Math.max(...tabla.map((g: any) => g.id)) + 1;
-}
+  dialogRef.afterClosed().subscribe((actualizo) => {
+    if (actualizo) {
+      this.obtenerGuardias();
+    }
+  });
+  }
+
+  /**
+   * Genera un ID único para un nuevo guardia.
+   * @returns El siguiente ID disponible basado en el máximo existente
+   */
+
+  generarId() {
+    const tabla = this.guardiasSrv.tablaGuardias$.value;
+    if (tabla.length === 0) return 1;
+    return Math.max(...tabla.map((g: any) => g.id)) + 1;
+  }
 }

@@ -4,6 +4,7 @@ import { FormsModule } from '@angular/forms';
 import { MatIcon } from '@angular/material/icon';
 import { Router } from '@angular/router';
 import { AutorizacionService } from '../autorizacion-service';
+import { HttpClient, HttpClientModule } from '@angular/common/http';
 
 /**
  * Componente de inicio de sesión del sistema.
@@ -11,27 +12,48 @@ import { AutorizacionService } from '../autorizacion-service';
  */
 @Component({
   selector: 'app-login',
-  imports: [CommonModule, FormsModule, MatIcon],
+  imports: [CommonModule, FormsModule, MatIcon, HttpClientModule],
   templateUrl: './login.html',
   styleUrl: './login.css',
 })
 export class Login {
-  user = '';
-  password = '';
+  user: string = '';
+  password: string = '';
+  loading = false;
 
-  constructor(private rutasPaginas:Router, private autoriza:AutorizacionService) {}
+  private apiUrl = 'http://localhost:5000/api/Usuario/GetUsuarioAccess';
 
-  /**
-   * Procesa el intento de inicio de sesión.
-   * Valida las credenciales y redirige al usuario si son correctas.
-   */
+  constructor(
+    private http: HttpClient,
+    private router: Router,
+    private authService: AutorizacionService
+  ) {}
+
   onAccept() {
-    if (this.autoriza.autenticar(this.user, this.password)) {
-      alert('Acceso concedido');
-      this.rutasPaginas.navigate(['/principal']);
-    } else {
-      alert('Error en credenciales');
+    if (!this.user || !this.password) {
+      alert('Ingrese usuario y contraseña');
+      return;
     }
+
+    this.loading = true;
+
+    const body = {
+      transaccion: 'LOGIN',
+      usuario: this.user,
+      clave: this.password
+    };
+
+    this.http.post<any>(this.apiUrl, body).subscribe({
+      next: (resp) => {
+        this.authService.guardarSesion(resp.token, resp.usuario);
+        this.router.navigate(['/principal']);
+        this.loading = false;
+      },
+      error: () => {
+        alert('Usuario o contraseña incorrectos');
+        this.loading = false;
+      }
+    });
   }
 
 

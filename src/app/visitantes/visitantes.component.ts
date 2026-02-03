@@ -4,6 +4,7 @@ import { CommonModule } from '@angular/common';
 import { Visitante } from '../models/programData';
 import { VisitantesService } from '../visitantes.service';
 import { ConsultaVisitante } from '../consulta-visitante/consulta-visitante';
+import { A } from '@angular/cdk/keycodes';
 
 /**
  * Componente para gestionar los visitantes programados.
@@ -34,9 +35,12 @@ export class VisitantesComponent implements OnInit {
   /**
    * Carga la lista de visitantes desde el servicio.
    */
-  cargarVisitantes(): void {
-    this.visitantes = this.visitantesService.getVisitantes();
-  }
+ cargarVisitantes(): void {
+  this.visitantesService.getVisitantes().subscribe({
+    next: (data) => this.visitantes = data,
+    error: (err) => alert('Error al cargar visitantes: ' + err.message)
+  });
+}
 
   /**
    * Abre el modal para crear un nuevo visitante.
@@ -50,34 +54,28 @@ export class VisitantesComponent implements OnInit {
    * Abre el modal para editar un visitante existente.
    * @param id - ID del visitante a editar
    */
-  onEditar(id: number): void {
-    const visitante = this.visitantesService.getVisitanteById(id);
-    if (visitante) {
-      this.editandoVisitante = visitante;
-      this.mostrarModal = true;
-    }
+onEditar(id: number): void {
+  const visitante = this.visitantes.find(v => v.id === id); // buscar en el array cargado
+  if (visitante) {
+    this.editandoVisitante = visitante;
+    this.mostrarModal = true;
   }
+}
 
   /**
    * Procesa los datos enviados desde el modal.
    * Crea o actualiza el visitante según el contexto.
    * @param data - Datos del visitante del formulario
    */
-  onGuardarDesdeModal(data: any) {
-    if (this.editandoVisitante) {
-      // Editar
-      this.visitantesService.updateVisitante({
-        id: this.editandoVisitante.id,
-        ...data,
-      });
-    } else {
-      // Crear
-      this.visitantesService.addVisitante(data);
-    }
-
-    this.cargarVisitantes();
-    this.cerrarModal();
-  }
+ onGuardarDesdeModal(data: any) {
+  const isEdit = !!this.editandoVisitante;
+  this.visitantesService.saveVisitante({ ...data, id: this.editandoVisitante?.id }, isEdit)
+    .subscribe({
+      next: () => this.cargarVisitantes(),
+      error: (err) => console.error(err)
+    });
+    
+}
 
   /**
    * Cierra el modal y limpia el estado de edición.
@@ -92,9 +90,11 @@ export class VisitantesComponent implements OnInit {
    * @param id - ID del visitante a eliminar
    */
   onEliminar(id: number): void {
-    if (confirm('¿Estás seguro de eliminar este registro?')) {
-      this.visitantesService.deleteVisitante(id);
-      this.cargarVisitantes();
-    }
+  if (confirm('¿Estás seguro de eliminar este registro?')) {
+    this.visitantesService.deleteVisitante(id).subscribe({
+      next: () => this.cargarVisitantes(),
+      error: (err) => console.error(err)
+    });
   }
+}
 }

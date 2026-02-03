@@ -2,21 +2,20 @@ import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { MatButtonModule } from '@angular/material/button';
 import { MatTableModule } from '@angular/material/table';
-import { Router } from '@angular/router';
 import { FormsModule } from '@angular/forms';
-import { AccesoService, RegistroAcceso } from '../acceso-service';
-import { BehaviorSubject } from 'rxjs';
+import { ControlAccesoService } from '../control-acceso-service';
+import { Control } from '../interfaces/control';
 
 interface RegistroPanel {
+  idAcceso: number;
   nombre: string;
-  tipo: 'Residente' | 'Visitante' | 'No Registrado';
+  tipo: string;
   placa: string;
   estado: 'ACEPTADO' | 'DENEGADO';
-  registrado: 'Sí' | 'No';
   fechaEntrada: string;
-  horaEntrada: string;
   horaSalida?: string;
 }
+
 
 /**
  * Componente para el panel de control de accesos.
@@ -24,93 +23,64 @@ interface RegistroPanel {
  */
 @Component({
   selector: 'panel-control',
+  standalone: true,
   imports: [MatTableModule, CommonModule, MatButtonModule, FormsModule],
   templateUrl: './panel-control.html',
   styleUrls: ['./panel-control.css'],
 })
 export class PanelControl implements OnInit {
 
-  constructor(
-    private rutasPaginas: Router,
-    private accesoSrv: AccesoService
-  ) {}
-
-  // Se usa para actualizar la tabla automáticamente
-  private registrosSubject = new BehaviorSubject<RegistroPanel[]>([]);
-  registros: RegistroPanel[] = [];
-
+  registros: any[] = [];
   filtro: string = '';
+
+  constructor(private controlSrv: ControlAccesoService) {}
 
   ngOnInit() {
     this.cargarRegistros();
-
-    // Observa cambios del storage en vivo
-    window.addEventListener("storage", () => {
-      this.cargarRegistros();
-    });
-
-    this.registrosSubject.subscribe(data => {
-      this.registros = data;
-    });
   }
 
-  /**
-   * Carga los registros de acceso desde el servicio y los convierte al formato del panel.
-   * Actualiza el BehaviorSubject con los datos convertidos.
-   */
   cargarRegistros() {
-  const data: RegistroAcceso[] = this.accesoSrv.getAccesos();
-
-  const convertidos: RegistroPanel[] = data.map(reg => ({
-    nombre: reg.persona ?? 'Desconocido',
-    tipo: reg.tipo,
-    placa: reg.placa,
-    estado: (reg.acceso ? 'ACEPTADO' : 'DENEGADO') as 'ACEPTADO' | 'DENEGADO',
-    registrado: (reg.acceso ? 'Sí' : 'No') as 'Sí' | 'No',
-    fechaEntrada: reg.fecha,
-    horaEntrada: reg.hora,
-      horaSalida: reg.horaSalida
-  }));
-
-  this.registrosSubject.next(convertidos);
+  this.controlSrv.getAccesos().subscribe({
+    next: (data: any[]) => {
+      this.registros = data.map(reg => ({
+        idAcceso: reg.idAcceso,
+        nombre: reg.persona ?? 'Desconocido',
+        tipo: reg.tipo,
+        placa: reg.placa,
+        estado: reg.acceso ? 'ACEPTADO' : 'DENEGADO',
+        fechaEntrada: reg.fecha
+          ? new Date(reg.fecha).toLocaleDateString()
+          : '',
+        horaEntrada: reg.fecha
+          ? new Date(reg.fecha).toLocaleTimeString()
+          : '',
+        horaSalida: reg.horaSalida
+          ? new Date(reg.horaSalida).toLocaleTimeString()
+          : null
+      }));
+    },
+    error: err => alert('Error al cargar registros: ' + err.message)
+  });
 }
 
-  /**
-   * Obtiene los registros filtrados según el texto de búsqueda.
-   * @returns Array de registros que coinciden con el filtro
-   */
-  get registrosFiltrados(): RegistroPanel[] {
-    if (!this.filtro) return this.registros;
 
-    const filtroLower = this.filtro.toLowerCase();
+  registrarSalida(registro: any) {
+    if (registro.horaSalida) return;
 
-    return this.registros.filter(
-      (reg) =>
-        reg.nombre.toLowerCase().includes(filtroLower) ||
-        reg.tipo.toLowerCase().includes(filtroLower) ||
-        reg.placa.toLowerCase().includes(filtroLower) ||
-        reg.estado.toLowerCase().includes(filtroLower) ||
-        reg.registrado.toLowerCase().includes(filtroLower)
-    );
+    this.controlSrv.registrarSalida(registro.idAcceso).subscribe({
+      next: () => this.cargarRegistros(),
+      error: err => alert('Error al registrar salida: ' + err.message)
+    });
   }
 
-  /**
-   * Registra la hora de salida de un vehículo.
-   * Actualiza el registro en memoria y en localStorage.
-   * @param index - Índice del registro en el array de registros
-   */
-  ingresarHoraSalida(index: number) {
-    const hora = new Date().toLocaleTimeString();
-    this.registros[index].horaSalida = hora;
+  get registrosFiltrados() {
+    if (!this.filtro) return this.registros;
 
-    // Actualizar en vivo el localStorage
-    const almacenados = this.accesoSrv.getAccesos();
-    if (almacenados[index]) {
-      (almacenados as any)[index].horaSalida = hora;
-      localStorage.setItem('accesos', JSON.stringify(almacenados));
-    }
-
-    // Refrescar los registros en la vista
-    this.cargarRegistros();
+    const f = this.filtro.toLowerCase();
+    return this.registros.filter(r =>
+      r.nombre.toLowerCase().includes(f) ||
+      r.placa.toLowerCase().includes(f) ||
+      r.tipo.toLowerCase().includes(f)
+    );
   }
 }

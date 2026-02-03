@@ -78,16 +78,11 @@
     </thead>
 
     <tbody>
-        <!-- Recorremos los residentes -->
-        <ng-container *ngFor="let r of datosTabla">
-            <!--Recorremos los vehículos del residente -->
-            <tr *ngFor="let v of r.vehiculos">
-                <td>{{ r.nombre }}</td>
-                <td>{{ v.placa }}</td>
-                <td>{{ v.modelo }}</td>
-                <td>{{ v.estado }}</td>
-            </tr>
-    
-        </ng-container>
-    </tbody>
+  <tr *ngFor="let v of vehiculos">
+    <td>{{ v.dueno }}</td>
+    <td>{{ v.placa }}</td>
+    <td>{{ v.modelo }}</td>
+    <td>{{ v.estado ? 'Activo' : 'Inactivo' }}</td>
+  </tr>
+</tbody>
 </table>
